@@ -1264,7 +1264,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
   
   public DFSInputStream open(String src) 
       throws IOException, UnresolvedLinkException {
-        LOG.debug("Opening " + src);
+        LOG.info("Opening " + src);
     return open(src, dfsClientConf.ioBufferSize, true, null);
   }
 

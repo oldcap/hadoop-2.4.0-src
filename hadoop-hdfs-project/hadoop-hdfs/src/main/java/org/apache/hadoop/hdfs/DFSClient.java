@@ -1449,6 +1449,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
                              int buffersize,
                              ChecksumOpt checksumOpt,
                              InetSocketAddress[] favoredNodes) throws IOException {
+    LOG.info("Creating " + src);
+    System.out.println("Creating " + src);
     checkOpen();
     if (permission == null) {
       permission = FsPermission.getFileDefault();

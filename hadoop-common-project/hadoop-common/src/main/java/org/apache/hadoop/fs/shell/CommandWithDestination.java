@@ -180,7 +180,6 @@ abstract class CommandWithDestination extends FsCommand {
    * @throws IOException if anything goes wrong
    */
   protected void processPath(PathData src, PathData dst) throws IOException {
-    System.out.println("processPath: " + src + dst);
     if (src.stat.isSymlink()) {
       // TODO: remove when FileContext is supported, this needs to either
       // copy the symlink or deref the symlink

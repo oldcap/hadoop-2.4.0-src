@@ -139,5 +139,19 @@ class ComposeCommands {
       super.processArguments(args);
     }
 
+    @Override
+    protected void processPath(PathData src, PathData dst) throws IOException {
+      System.out.println("processPath: " + src + ", "+ dst);
+      if (src.stat.isSymlink()) {
+        // TODO: remove when FileContext is supported, this needs to either
+        // copy the symlink or deref the symlink
+        throw new PathOperationException(src.toString());        
+      } else if (src.stat.isFile()) {
+        copyFileToTarget(src, dst);
+      } else if (src.stat.isDirectory() && !isRecursive()) {
+        throw new PathIsDirectoryException(src.toString());
+      }
+    }
+
   }
 }

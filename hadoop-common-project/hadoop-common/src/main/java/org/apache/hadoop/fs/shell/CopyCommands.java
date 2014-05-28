@@ -220,11 +220,21 @@ class CopyCommands {
     }
 
     @Override
+    protected void processRawArguments(LinkedList<String> args)
+    throws IOException {
+      for (String s : args) {
+        System.out.println("Raw argument: " + s);
+      }
+      super.processRawArguments(args);
+    }
+
+    @Override
     protected void processArguments(LinkedList<PathData> args)
     throws IOException {
       System.out.println("CopyCommands processArguments: " + args.size());
       // NOTE: this logic should be better, mimics previous implementation
       if (args.size() == 1 && args.get(0).toString().equals("-")) {
+        System.out.println("Only 1 argument" + getTargetPath(args.get(0)));
         copyStreamToTarget(System.in, getTargetPath(args.get(0)));
         return;
       }

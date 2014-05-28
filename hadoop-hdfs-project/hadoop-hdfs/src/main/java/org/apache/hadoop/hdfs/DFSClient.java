@@ -1265,7 +1265,6 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
   public DFSInputStream open(String src) 
       throws IOException, UnresolvedLinkException {
         LOG.info("Opening " + src);
-        System.out.println("Opening " + src);
     return open(src, dfsClientConf.ioBufferSize, true, null);
   }
 
@@ -1424,8 +1423,6 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
                              Progressable progress,
                              int buffersize,
                              ChecksumOpt checksumOpt) throws IOException {
-    LOG.info("Creating " + src);
-    System.out.println("Creating " + src);
     return create(src, permission, flag, createParent, replication, blockSize, 
         progress, buffersize, checksumOpt, null);
   }
@@ -1450,7 +1447,6 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
                              ChecksumOpt checksumOpt,
                              InetSocketAddress[] favoredNodes) throws IOException {
     LOG.info("Creating " + src);
-    System.out.println("Creating " + src);
     checkOpen();
     if (permission == null) {
       permission = FsPermission.getFileDefault();

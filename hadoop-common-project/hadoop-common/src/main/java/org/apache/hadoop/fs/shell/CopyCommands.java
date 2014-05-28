@@ -204,6 +204,7 @@ class CopyCommands {
     // commands operating on local paths have no need for glob expansion
     @Override
     protected List<PathData> expandArgument(String arg) throws IOException {
+      System.out.println("CopyCommands expandArgument: " + arg);
       List<PathData> items = new LinkedList<PathData>();
       try {
         items.add(new PathData(new URI(arg), getConf()));
@@ -221,6 +222,7 @@ class CopyCommands {
     @Override
     protected void processArguments(LinkedList<PathData> args)
     throws IOException {
+      System.out.println("CopyCommands processArguments: " + args.size());
       // NOTE: this logic should be better, mimics previous implementation
       if (args.size() == 1 && args.get(0).toString().equals("-")) {
         copyStreamToTarget(System.in, getTargetPath(args.get(0)));

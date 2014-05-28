@@ -1424,6 +1424,8 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
                              Progressable progress,
                              int buffersize,
                              ChecksumOpt checksumOpt) throws IOException {
+    LOG.info("Creating " + src);
+    System.out.println("Creating " + src)
     return create(src, permission, flag, createParent, replication, blockSize, 
         progress, buffersize, checksumOpt, null);
   }

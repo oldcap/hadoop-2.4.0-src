@@ -263,6 +263,12 @@ implements ByteBufferReadable, CanSetDropBehind, CanSetReadahead,
   private long fetchLocatedBlocksAndGetLastBlockLength() throws IOException {
     final LocatedBlocks newInfo = dfsClient.getLocatedBlocks(src, 0);
     DFSClient.LOG.info("[compose] newInfo: " + newInfo.locatedBlockCount());
+    for (LocatedBlock lb : newInfo.getLocatedBlocks()) {
+      DFSClient.LOG.info("[compose] block: " + lb.getBlock().getBlockId());
+      for (DatanodeInfo di : lb.getLocations()) {
+        DFSClient.LOG.info("[compose]   " + di);
+      }
+    }
     if (DFSClient.LOG.isDebugEnabled()) {
       DFSClient.LOG.debug("newInfo = " + newInfo);
     }

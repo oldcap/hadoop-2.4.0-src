@@ -271,7 +271,7 @@ abstract class CommandWithDestination extends FsCommand {
    */ 
   protected void copyStreamToTarget(InputStream in, PathData target)
   throws IOException {
-    System.out.println("In copyStreamToTarget");
+    System.out.println("[compose] In copyStreamToTarget");
     if (target.exists && (target.stat.isDirectory() || !overwrite)) {
       throw new PathExistsException(target.toString());
     }

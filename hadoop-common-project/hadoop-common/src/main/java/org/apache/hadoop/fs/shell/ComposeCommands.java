@@ -141,7 +141,7 @@ class ComposeCommands {
 
     @Override
     protected void processPath(PathData src, PathData dst) throws IOException {
-      System.out.println("processPath: " + src.fs + ", "+ dst.fs);
+      System.out.println("[compose] processPath: " + src.fs + ", "+ dst.fs);
       if (src.stat.isSymlink()) {
         // TODO: remove when FileContext is supported, this needs to either
         // copy the symlink or deref the symlink

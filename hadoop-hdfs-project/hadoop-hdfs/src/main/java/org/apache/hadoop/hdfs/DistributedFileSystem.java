@@ -291,6 +291,7 @@ public class DistributedFileSystem extends FileSystem {
   @Override
   public FSDataInputStream open(Path f, final int bufferSize)
       throws IOException {
+        LOG.info("[compose] DistributedFilesystem open: " + f);
     statistics.incrementReadOps(1);
     Path absF = fixRelativePart(f);
     return new FileSystemLinkResolver<FSDataInputStream>() {

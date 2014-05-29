@@ -1595,7 +1595,7 @@ public class DFSOutputStream extends FSOutputSummer
       FsPermission masked, EnumSet<CreateFlag> flag, boolean createParent,
       short replication, long blockSize, Progressable progress, int buffersize,
       DataChecksum checksum, String[] favoredNodes) throws IOException {
-    DFSClient.LOG.info("newStreamForCreate: " + src);
+    DFSClient.LOG.info("[compose] newStreamForCreate: " + src);
     final HdfsFileStatus stat;
     try {
       stat = dfsClient.namenode.create(src, masked, dfsClient.clientName,

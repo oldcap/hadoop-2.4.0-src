@@ -139,36 +139,6 @@ class ComposeCommands {
       super.processArguments(args);
     }
 
-    /**
-     * Copies the source file to the target.
-     * @param src item to copy
-     * @param target where to copy the item
-     * @throws IOException if copy fails
-     */ 
-    protected void composeFileToTarget(PathData src, PathData target) throws IOException {
-      src.fs.setVerifyChecksum(verifyChecksum);
-      InputStream in = null;
-      try {
-        in = src.fs.open(src.path);
-        copyStreamToTarget(in, target);
-      } finally {
-        IOUtils.closeStream(in);
-      }
-      if(preserve) {
-        target.fs.setTimes(
-          target.path,
-          src.stat.getModificationTime(),
-          src.stat.getAccessTime());
-        target.fs.setOwner(
-          target.path,
-          src.stat.getOwner(),
-          src.stat.getGroup());
-        target.fs.setPermission(
-          target.path,
-          src.stat.getPermission());
-      }
-    }
-    
     @Override
     protected void processPath(PathData src, PathData dst) throws IOException {
       System.out.println("[compose] processPath: " + src.fs + ", "+ dst.fs);

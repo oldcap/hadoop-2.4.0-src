@@ -260,6 +260,36 @@ abstract class CommandWithDestination extends FsCommand {
         src.stat.getPermission());
   }
   }
+
+  /**
+   * Compose the source file block to the target.
+   * @param src item to compose
+   * @param target where to copy the item
+   * @throws IOException if copy fails
+   */ 
+  protected void composeFileToTarget(PathData src, PathData target) throws IOException {
+    src.fs.setVerifyChecksum(verifyChecksum);
+    InputStream in = null;
+    try {
+      in = src.fs.open(src.path);
+      copyStreamToTarget(in, target);
+    } finally {
+      IOUtils.closeStream(in);
+    }
+    if(preserve) {
+      target.fs.setTimes(
+        target.path,
+        src.stat.getModificationTime(),
+        src.stat.getAccessTime());
+      target.fs.setOwner(
+        target.path,
+        src.stat.getOwner(),
+        src.stat.getGroup());
+      target.fs.setPermission(
+        target.path,
+        src.stat.getPermission());
+    }
+  }
   
   /**
    * Copies the stream contents to a temporary file.  If the copy is

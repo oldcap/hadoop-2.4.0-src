@@ -1291,6 +1291,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
   public DFSInputStream open(String src, int buffersize, boolean verifyChecksum)
       throws IOException, UnresolvedLinkException {
         LOG.info("[compose] DFSClient opening " + src);
+        
     checkOpen();
     //    Get block info from namenode
     return new DFSInputStream(this, src, buffersize, verifyChecksum);

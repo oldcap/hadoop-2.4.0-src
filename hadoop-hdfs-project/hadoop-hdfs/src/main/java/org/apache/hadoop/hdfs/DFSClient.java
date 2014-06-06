@@ -1293,6 +1293,10 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
         // compose
         LOG.info("[compose] DFSClient opening " + src);
         LocatedBlocks blockLocations = callGetBlockLocations(namenode, src, 0, Long.MAX_VALUE);
+        for (LocatedBlock lb : blockLocations) {
+          DatanodeInfo[] di = lb.getLocations();
+          LOG.info("  [compose] block offset: " + lb.getStartOffset() + ", locations: " + di);
+        }
         
     checkOpen();
     //    Get block info from namenode

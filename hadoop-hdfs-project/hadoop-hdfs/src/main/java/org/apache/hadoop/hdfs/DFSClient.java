@@ -1321,6 +1321,17 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
     return create(src, overwrite, dfsClientConf.defaultReplication,
         dfsClientConf.defaultBlockSize, null);
   }
+
+  /**
+   * Call {@link #create(String, boolean, short, long, Progressable)} with
+   * default <code>replication</code> and <code>blockSize<code> and null <code>
+   * progress</code>.
+   */
+  public OutputStream create(String src, boolean overwrite, boolean compose) 
+      throws IOException {
+    return create(src, overwrite, dfsClientConf.defaultReplication,
+        dfsClientConf.defaultBlockSize, null);
+  }
     
   /**
    * Call {@link #create(String, boolean, short, long, Progressable)} with

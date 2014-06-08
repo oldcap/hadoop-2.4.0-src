@@ -1453,7 +1453,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
                              int buffersize,
                              ChecksumOpt checksumOpt,
                              InetSocketAddress[] favoredNodes) throws IOException {
-    LOG.info("[compose] Creating " + src);
+    LOG.info("[compose] In DFSClient, creating DFSOutputStream for " + src);
     checkOpen();
     if (permission == null) {
       permission = FsPermission.getFileDefault();
@@ -1478,6 +1478,51 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
     return result;
   }
   
+  /**
+   * Same as {@link #create(String, FsPermission, EnumSet, boolean, short, long,
+   * Progressable, int, ChecksumOpt)} with the addition of favoredNodes that is
+   * a hint to where the namenode should place the file blocks.
+   * The favored nodes hint is not persisted in HDFS. Hence it may be honored
+   * at the creation time only. HDFS could move the blocks during balancing or
+   * replication, to move the blocks from favored nodes. A value of null means
+   * no favored nodes for this create
+   */
+  public DFSOutputStream create(String src, 
+                             FsPermission permission,
+                             EnumSet<CreateFlag> flag, 
+                             boolean createParent,
+                             short replication,
+                             long blockSize,
+                             Progressable progress,
+                             int buffersize,
+                             ChecksumOpt checksumOpt,
+                             InetSocketAddress[] favoredNodes
+                             boolean compose) throws IOException {
+    LOG.info("[compose] In DFSClient, creating composed DFSOutputStream for " + src);
+    checkOpen();
+    if (permission == null) {
+      permission = FsPermission.getFileDefault();
+    }
+    FsPermission masked = permission.applyUMask(dfsClientConf.uMask);
+    if(LOG.isDebugEnabled()) {
+      LOG.debug(src + ": masked=" + masked);
+    }
+    String[] favoredNodeStrs = null;
+    if (favoredNodes != null) {
+      favoredNodeStrs = new String[favoredNodes.length];
+      for (int i = 0; i < favoredNodes.length; i++) {
+        favoredNodeStrs[i] = 
+            favoredNodes[i].getHostName() + ":" 
+                         + favoredNodes[i].getPort();
+      }
+    }
+    final DFSOutputStream result = DFSOutputStream.newStreamForCompose(this,
+        src, masked, flag, createParent, replication, blockSize, progress,
+        buffersize, dfsClientConf.createChecksum(checksumOpt), favoredNodeStrs);
+    beginFileLease(src, result);
+    return result;
+  }
+
   /**
    * Append to an existing file if {@link CreateFlag#APPEND} is present
    */

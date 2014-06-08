@@ -1618,6 +1618,33 @@ public class DFSOutputStream extends FSOutputSummer
     return out;
   }
 
+  static DFSOutputStream newStreamForCompose(DFSClient dfsClient, String src,
+      FsPermission masked, EnumSet<CreateFlag> flag, boolean createParent,
+      short replication, long blockSize, Progressable progress, int buffersize,
+      DataChecksum checksum, String[] favoredNodes) throws IOException {
+    DFSClient.LOG.info("[compose] newStreamForCreate: " + src);
+    final HdfsFileStatus stat;
+    try {
+      stat = dfsClient.namenode.create(src, masked, dfsClient.clientName,
+          new EnumSetWritable<CreateFlag>(flag), createParent, replication,
+          blockSize);
+    } catch(RemoteException re) {
+      throw re.unwrapRemoteException(AccessControlException.class,
+                                     DSQuotaExceededException.class,
+                                     FileAlreadyExistsException.class,
+                                     FileNotFoundException.class,
+                                     ParentNotDirectoryException.class,
+                                     NSQuotaExceededException.class,
+                                     SafeModeException.class,
+                                     UnresolvedPathException.class,
+                                     SnapshotAccessControlException.class);
+    }
+    final DFSOutputStream out = new DFSOutputStream(dfsClient, src, stat,
+        flag, progress, checksum, favoredNodes);
+    out.start();
+    return out;
+  }
+
   static DFSOutputStream newStreamForCreate(DFSClient dfsClient, String src,
       FsPermission masked, EnumSet<CreateFlag> flag, boolean createParent,
       short replication, long blockSize, Progressable progress, int buffersize,

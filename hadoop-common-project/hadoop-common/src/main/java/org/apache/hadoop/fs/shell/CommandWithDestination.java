@@ -272,7 +272,7 @@ abstract class CommandWithDestination extends FsCommand {
     InputStream in = null;
     try {
       in = src.fs.open(src.path);
-      copyStreamToTarget(in, target);
+      composeStreamToTarget(in, target);
     } finally {
       IOUtils.closeStream(in);
     }
@@ -316,11 +316,46 @@ abstract class CommandWithDestination extends FsCommand {
     }
   }
 
+  /**
+   * Copies the stream contents to a temporary file.  If the copy is
+   * successful, the temporary file will be renamed to the real path,
+   * else the temporary file will be deleted.
+   * @param in the input stream for the copy
+   * @param target where to store the contents of the stream
+   * @throws IOException if copy fails
+   */ 
+  protected void composeStreamToTarget(InputStream in, PathData target)
+  throws IOException {
+    System.out.println("[compose] In composeStreamToTarget");
+    if (target.exists && (target.stat.isDirectory() || !overwrite)) {
+      throw new PathExistsException(target.toString());
+    }
+    TargetFileSystem targetFs = new TargetFileSystem(target.fs);
+    try {
+      PathData tempTarget = target.suffix("._COPYING_");
+      targetFs.setWriteChecksum(writeChecksum);
+      targetFs.composeStreamToFile(in, tempTarget);
+      targetFs.rename(tempTarget, target);
+    } finally {
+      targetFs.close(); // last ditch effort to ensure temp file is removed
+    }
+  }
+
   // Helper filter filesystem that registers created files as temp files to
   // be deleted on exit unless successfully renamed
   private static class TargetFileSystem extends FilterFileSystem {
     TargetFileSystem(FileSystem fs) {
       super(fs);
+    }
+
+    void composeStreamToFile(InputStream in, PathData target) throws IOException {
+      FSDataOutputStream out = null;
+      try {
+        out = create(target, true, true);
+        IOUtils.copyBytes(in, out, getConf(), true);
+      } finally {
+        IOUtils.closeStream(out); // just in case copyBytes didn't
+      }
     }
 
     void writeStreamToFile(InputStream in, PathData target) throws IOException {

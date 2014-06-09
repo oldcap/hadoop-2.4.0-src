@@ -480,8 +480,6 @@ public abstract class AbstractFileSystem {
     FsPermission permission = null;
     Progressable progress = null;
     Boolean createParent = null;
-
-    LOG.info("[compose] In AbstractFileSystem, create");
  
     for (CreateOpts iOpt : opts) {
       if (CreateOpts.BlockSize.class.isInstance(iOpt)) {

@@ -1329,7 +1329,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
    */
   public OutputStream create(String src, boolean overwrite, boolean compose) 
       throws IOException {
-    return create(src, overwrite, FsPermission.getFileDefault(),
+    return create(src, FsPermission.getFileDefault(),
       overwrite ? EnumSet.of(CreateFlag.CREATE, CreateFlag.OVERWRITE)
             : EnumSet.of(CreateFlag.CREATE), true,
             dfsClientConf.defaultReplication,

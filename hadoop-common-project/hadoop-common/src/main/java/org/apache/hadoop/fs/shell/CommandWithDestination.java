@@ -351,7 +351,7 @@ abstract class CommandWithDestination extends FsCommand {
     void composeStreamToFile(InputStream in, PathData target) throws IOException {
       FSDataOutputStream out = null;
       try {
-        out = create(target, true, true);
+        out = create(target.path, true, true);
         IOUtils.copyBytes(in, out, getConf(), true);
       } finally {
         IOUtils.closeStream(out); // just in case copyBytes didn't

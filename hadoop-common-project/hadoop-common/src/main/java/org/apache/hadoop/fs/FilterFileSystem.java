@@ -179,6 +179,13 @@ public class FilterFileSystem extends FileSystem {
         overwrite, bufferSize, replication, blockSize, progress);
   }
   
+  @Override
+  public FSDataOutputStream create(Path f, FsPermission permission,
+      boolean overwrite, int bufferSize, short replication, long blockSize,
+      Progressable progress, boolean compose) throws IOException {
+    return fs.create(f, permission,
+        overwrite, bufferSize, replication, blockSize, progress, compose);
+  }
 
   
   @Override

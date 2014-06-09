@@ -415,7 +415,8 @@ public class DistributedFileSystem extends FileSystem {
       public FSDataOutputStream doCall(final Path p)
           throws IOException, UnresolvedLinkException {
         return new HdfsDataOutputStream(dfs.create(getPathName(p), permission,
-            cflags, replication, blockSize, progress, bufferSize, checksumOpt),
+            cflags, replication, blockSize, progress, bufferSize, checksumOpt, 
+            compose),
             statistics);
       }
       @Override

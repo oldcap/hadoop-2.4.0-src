@@ -103,41 +103,41 @@ class ComposeCommands {
 
     @Override
     protected void processOptions(LinkedList<String> args) throws IOException {
-      CommandFormat cf = new CommandFormat(1, Integer.MAX_VALUE, "f", "p");
+      CommandFormat cf = new CommandFormat(2, Integer.MAX_VALUE, "f", "p");
       cf.parse(args);
       setOverwrite(cf.getOpt("f"));
       setPreserve(cf.getOpt("p"));
-      getRemoteDestination(args);
       // should have a -r option
       setRecursive(true);
+      getRemoteDestination(args);
     }
 
-    @Override
-    protected List<PathData> expandArgument(String arg) throws IOException {
-      List<PathData> items = new LinkedList<PathData>();
-      try {
-        items.add(new PathData(new URI(arg), getConf()));
-      } catch (URISyntaxException e) {
-        if (Path.WINDOWS) {
-          // Unlike URI, PathData knows how to parse Windows drive-letter paths.
-          items.add(new PathData(arg, getConf()));
-        } else {
-          throw new IOException("unexpected URISyntaxException", e);
-        }
-      }
-      return items;
-    }
+    // @Override
+    // protected List<PathData> expandArgument(String arg) throws IOException {
+    //   List<PathData> items = new LinkedList<PathData>();
+    //   try {
+    //     items.add(new PathData(new URI(arg), getConf()));
+    //   } catch (URISyntaxException e) {
+    //     if (Path.WINDOWS) {
+    //       // Unlike URI, PathData knows how to parse Windows drive-letter paths.
+    //       items.add(new PathData(arg, getConf()));
+    //     } else {
+    //       throw new IOException("unexpected URISyntaxException", e);
+    //     }
+    //   }
+    //   return items;
+    // }
 
-    @Override
-    protected void processArguments(LinkedList<PathData> args)
-    throws IOException {
-        // NOTE: this logic should be better, mimics previous implementation
-      if (args.size() == 1 && args.get(0).toString().equals("-")) {
-        copyStreamToTarget(System.in, getTargetPath(args.get(0)));
-        return;
-      }
-      super.processArguments(args);
-    }
+    // @Override
+    // protected void processArguments(LinkedList<PathData> args)
+    // throws IOException {
+    //     // NOTE: this logic should be better, mimics previous implementation
+    //   if (args.size() == 1 && args.get(0).toString().equals("-")) {
+    //     copyStreamToTarget(System.in, getTargetPath(args.get(0)));
+    //     return;
+    //   }
+    //   super.processArguments(args);
+    // }
 
     @Override
     protected void processPath(PathData src, PathData dst) throws IOException {

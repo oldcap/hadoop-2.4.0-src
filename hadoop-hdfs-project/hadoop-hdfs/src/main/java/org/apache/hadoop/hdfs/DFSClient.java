@@ -1507,7 +1507,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
                              Progressable progress,
                              int buffersize,
                              ChecksumOpt checksumOpt,
-                             InetSocketAddress[] favoredNodes
+                             InetSocketAddress[] favoredNodes,
                              boolean compose) throws IOException {
     LOG.info("[compose] In DFSClient, creating composed DFSOutputStream for " + src);
     checkOpen();

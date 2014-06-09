@@ -352,6 +352,7 @@ abstract class CommandWithDestination extends FsCommand {
      * Compose the stream in to the target path
      */
     void composeStreamToFile(InputStream in, PathData target) throws IOException {
+      System.out.println("[compose] In composeStreamToFile");
       FSDataOutputStream out = null;
       try {
         out = create(target.path, true, true);

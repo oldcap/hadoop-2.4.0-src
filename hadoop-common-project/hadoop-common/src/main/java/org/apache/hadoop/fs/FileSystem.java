@@ -781,7 +781,7 @@ public abstract class FileSystem extends Configured implements Closeable {
    */
   public FSDataOutputStream create(Path f, boolean overwrite)
       throws IOException {
-        LOG.info("[compose] In FileSystem create(Path, boolean)");
+        LOG.info("[compose] In FileSystem create(Path, boolean): " + this.getClass().getName());
     return create(f, overwrite, 
                   getConf().getInt("io.file.buffer.size", 4096),
                   getDefaultReplication(f),

@@ -349,6 +349,10 @@ public class DistributedFileSystem extends FileSystem {
   public FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
       throws IOException {
         LOG.info("[compose] In DistributedFilesystem, create(Path, boolean, boolean)");
+        return this.create(f, permission,
+            overwrite ? EnumSet.of(CreateFlag.CREATE, CreateFlag.OVERWRITE)
+                : EnumSet.of(CreateFlag.CREATE), bufferSize, replication,
+            blockSize, progress, null);
       }
 
   /**

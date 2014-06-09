@@ -350,14 +350,14 @@ public class DistributedFileSystem extends FileSystem {
         blockSize, progress, null, compose);
   }
 
-  public HdfsDataOutputStream create(final Path f,
-      final FsPermission permission, final boolean overwrite,
-      final int bufferSize, final short replication, final long blockSize,
-      final Progressable progress, final InetSocketAddress[] favoredNodes)
-          throws IOException {
-            
-            return this.create(f, permission, overwrite, bufferSize, replication,
-                    blockSize, progress, favoredNodes, false);
+  @Override
+  public FSDataOutputStream create(final Path f, final FsPermission permission,
+    final EnumSet<CreateFlag> cflags, final int bufferSize,
+    final short replication, final long blockSize, final Progressable progress,
+    final ChecksumOpt checksumOpt) throws IOException {
+
+    return this.create(f, permission, cflags, bufferSize, replication, blockSize,
+      progress, checksumOpt, false);
   }
 
   /**
@@ -373,8 +373,7 @@ public class DistributedFileSystem extends FileSystem {
   public HdfsDataOutputStream create(final Path f,
       final FsPermission permission, final boolean overwrite,
       final int bufferSize, final short replication, final long blockSize,
-      final Progressable progress, final InetSocketAddress[] favoredNodes, 
-      final boolean compose)
+      final Progressable progress, final InetSocketAddress[] favoredNodes)
           throws IOException {
     statistics.incrementWriteOps(1);
     Path absF = fixRelativePart(f);
@@ -404,11 +403,11 @@ public class DistributedFileSystem extends FileSystem {
     }.resolve(this, absF);
   }
   
-  @Override
+  
   public FSDataOutputStream create(final Path f, final FsPermission permission,
     final EnumSet<CreateFlag> cflags, final int bufferSize,
     final short replication, final long blockSize, final Progressable progress,
-    final ChecksumOpt checksumOpt) throws IOException {
+    final ChecksumOpt checksumOpt, boolean compose) throws IOException {
     statistics.incrementWriteOps(1);
     Path absF = fixRelativePart(f);
     return new FileSystemLinkResolver<FSDataOutputStream>() {

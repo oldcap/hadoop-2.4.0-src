@@ -355,10 +355,9 @@ public class DistributedFileSystem extends FileSystem {
       final int bufferSize, final short replication, final long blockSize,
       final Progressable progress, final InetSocketAddress[] favoredNodes)
           throws IOException {
-            return this.create(f, permission,
-        overwrite ? EnumSet.of(CreateFlag.CREATE, CreateFlag.OVERWRITE)
-            : EnumSet.of(CreateFlag.CREATE), bufferSize, replication,
-        blockSize, progress, null, false);
+            
+            return this.create(f, permission, overwrite, bufferSize, replication,
+                    blockSize, progress, favoredNodes, false);
   }
 
   /**

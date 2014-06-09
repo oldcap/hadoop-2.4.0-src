@@ -1432,7 +1432,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
       throws IOException {
         LOG.info("In DFSClient, create with compose flag");
     return create(src, permission, flag, true,
-        replication, blockSize, progress, buffersize, checksumOpt, null);
+        replication, blockSize, progress, buffersize, checksumOpt, null, compose);
   }
 
   /**

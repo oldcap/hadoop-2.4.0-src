@@ -792,6 +792,7 @@ public abstract class FileSystem extends Configured implements Closeable {
    * @param f the file to create
    * @param overwrite if a file with this name already exists, then if true,
    *   the file will be overwritten, and if false an exception will be thrown.
+   * @param compose a file rather than writing data
    */
   public FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
       throws IOException {

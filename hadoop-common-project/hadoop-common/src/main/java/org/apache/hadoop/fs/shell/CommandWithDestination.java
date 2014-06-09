@@ -348,6 +348,9 @@ abstract class CommandWithDestination extends FsCommand {
       super(fs);
     }
 
+    /**
+     * Compose the stream in to the target path
+     */
     void composeStreamToFile(InputStream in, PathData target) throws IOException {
       FSDataOutputStream out = null;
       try {

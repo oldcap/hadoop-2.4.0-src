@@ -795,8 +795,19 @@ public abstract class FileSystem extends Configured implements Closeable {
    *   the file will be overwritten, and if false an exception will be thrown.
    * @param compose a file rather than writing data
    */
-  public abstract FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
-      throws IOException;
+  public FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
+      throws IOException {
+            LOG.info("[compose] In FileSystem create(Path, boolean, boolean)");
+        return create(f, 
+                      FsPermission.getFileDefault().applyUMask(
+                          FsPermission.getUMask(getConf())),
+                      overwrite,
+                      getConf().getInt("io.file.buffer.size", 4096),
+                      getDefaultReplication(f),
+                      getDefaultBlockSize(f),
+                      null,
+                      compose);
+      }
 
   /**
    * Create an FSDataOutputStream at the indicated Path with write-progress
@@ -922,6 +933,31 @@ public abstract class FileSystem extends Configured implements Closeable {
   /**
    * Create an FSDataOutputStream at the indicated Path with write-progress
    * reporting.
+   * @param f the file name to open
+   * @param permission
+   * @param overwrite if a file with this name already exists, then if true,
+   *   the file will be overwritten, and if false an error will be thrown.
+   * @param bufferSize the size of the buffer to be used.
+   * @param replication required block replication for the file.
+   * @param blockSize
+   * @param progress
+   * @param compose if the target file should be composed, without physical
+   *    data copying.
+   * @throws IOException
+   * @see #setPermission(Path, FsPermission)
+   */
+  public abstract FSDataOutputStream create(Path f,
+      FsPermission permission,
+      boolean overwrite,
+      int bufferSize,
+      short replication,
+      long blockSize,
+      Progressable progress,
+      boolean compose) throws IOException;
+
+  /**
+   * Create an FSDataOutputStream at the indicated Path with write-progress
+   * reporting, and with compose flag.
    * @param f the file name to open
    * @param permission
    * @param overwrite if a file with this name already exists, then if true,

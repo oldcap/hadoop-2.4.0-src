@@ -355,7 +355,7 @@ abstract class CommandWithDestination extends FsCommand {
       System.out.println("[compose] In composeStreamToFile");
       FSDataOutputStream out = null;
       try {
-        out = create(target.path, true, true);
+        out = create(target, true);
         IOUtils.copyBytes(in, out, getConf(), true);
       } finally {
         IOUtils.closeStream(out); // just in case copyBytes didn't
@@ -376,6 +376,15 @@ abstract class CommandWithDestination extends FsCommand {
     FSDataOutputStream create(PathData item) throws IOException {
       try {
         return create(item.path, true);
+      } finally { // might have been created but stream was interrupted
+        deleteOnExit(item.path);
+      }
+    }
+
+    // create with compose flag
+    FSDataOutputStream create(PathData item, boolean compose) throws IOException {
+      try {
+        return create(item.path, true, true);
       } finally { // might have been created but stream was interrupted
         deleteOnExit(item.path);
       }

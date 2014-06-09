@@ -788,6 +788,20 @@ public abstract class FileSystem extends Configured implements Closeable {
   }
 
   /**
+   * Create an FSDataOutputStream at the indicated Path for compose.
+   * @param f the file to create
+   * @param overwrite if a file with this name already exists, then if true,
+   *   the file will be overwritten, and if false an exception will be thrown.
+   */
+  public FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
+      throws IOException {
+    return create(f, overwrite, 
+                  getConf().getInt("io.file.buffer.size", 4096),
+                  getDefaultReplication(f),
+                  getDefaultBlockSize(f));
+  }
+
+  /**
    * Create an FSDataOutputStream at the indicated Path with write-progress
    * reporting.
    * Files are overwritten by default.

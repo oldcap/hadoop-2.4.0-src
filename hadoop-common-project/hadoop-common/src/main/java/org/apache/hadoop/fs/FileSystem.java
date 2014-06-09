@@ -794,13 +794,8 @@ public abstract class FileSystem extends Configured implements Closeable {
    *   the file will be overwritten, and if false an exception will be thrown.
    * @param compose a file rather than writing data
    */
-  public FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
-      throws IOException {
-    return create(f, overwrite, 
-                  getConf().getInt("io.file.buffer.size", 4096),
-                  getDefaultReplication(f),
-                  getDefaultBlockSize(f));
-  }
+  public abstract FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
+      throws IOException;
 
   /**
    * Create an FSDataOutputStream at the indicated Path with write-progress

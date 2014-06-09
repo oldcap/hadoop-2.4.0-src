@@ -1416,6 +1416,26 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
   }
 
   /**
+   * Call {@link #create(String, FsPermission, EnumSet, boolean, short, 
+   * long, Progressable, int, ChecksumOpt)} with <code>createParent</code>
+   *  set to true, with compose flag
+   */
+  public DFSOutputStream create(String src, 
+                             FsPermission permission,
+                             EnumSet<CreateFlag> flag, 
+                             short replication,
+                             long blockSize,
+                             Progressable progress,
+                             int buffersize,
+                             ChecksumOpt checksumOpt,
+                             boolean compose)
+      throws IOException {
+        LOG.info("In DFSClient, create with compose flag");
+    return create(src, permission, flag, true,
+        replication, blockSize, progress, buffersize, checksumOpt, null);
+  }
+
+  /**
    * Create a new dfs file with the specified block replication 
    * with write-progress reporting and return an output stream for writing
    * into the file.  

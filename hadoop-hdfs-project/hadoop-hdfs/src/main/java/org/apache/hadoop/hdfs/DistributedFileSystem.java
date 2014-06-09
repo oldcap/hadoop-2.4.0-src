@@ -340,6 +340,18 @@ public class DistributedFileSystem extends FileSystem {
   }
 
   /**
+   * Create an FSDataOutputStream at the indicated Path for compose.
+   * @param f the file to create
+   * @param overwrite if a file with this name already exists, then if true,
+   *   the file will be overwritten, and if false an exception will be thrown.
+   * @param compose a file rather than writing data
+   */
+  public FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
+      throws IOException {
+        LOG.info("[compose] In DistributedFilesystem, create(Path, boolean, boolean)");
+      }
+
+  /**
    * Same as  
    * {@link #create(Path, FsPermission, boolean, int, short, long, 
    * Progressable)} with the addition of favoredNodes that is a hint to 

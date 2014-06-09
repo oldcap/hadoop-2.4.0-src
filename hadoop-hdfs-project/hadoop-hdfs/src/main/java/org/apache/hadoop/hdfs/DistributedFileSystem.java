@@ -407,7 +407,7 @@ public class DistributedFileSystem extends FileSystem {
   public FSDataOutputStream create(final Path f, final FsPermission permission,
     final EnumSet<CreateFlag> cflags, final int bufferSize,
     final short replication, final long blockSize, final Progressable progress,
-    final ChecksumOpt checksumOpt, boolean compose) throws IOException {
+    final ChecksumOpt checksumOpt, final boolean compose) throws IOException {
     statistics.incrementWriteOps(1);
     Path absF = fixRelativePart(f);
     return new FileSystemLinkResolver<FSDataOutputStream>() {

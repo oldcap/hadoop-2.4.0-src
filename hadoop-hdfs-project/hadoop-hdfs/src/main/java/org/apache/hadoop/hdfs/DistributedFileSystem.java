@@ -339,6 +339,28 @@ public class DistributedFileSystem extends FileSystem {
         blockSize, progress, null);
   }
 
+  @Override
+  public FSDataOutputStream create(Path f, FsPermission permission,
+      boolean overwrite, int bufferSize, short replication, long blockSize,
+      Progressable progress, boolean compose) throws IOException {
+    LOG.info("[compose] In DistributedFilesystem, composed create");
+    return this.create(f, permission,
+        overwrite ? EnumSet.of(CreateFlag.CREATE, CreateFlag.OVERWRITE)
+            : EnumSet.of(CreateFlag.CREATE), bufferSize, replication,
+        blockSize, progress, null, compose);
+  }
+
+  public HdfsDataOutputStream create(final Path f,
+      final FsPermission permission, final boolean overwrite,
+      final int bufferSize, final short replication, final long blockSize,
+      final Progressable progress, final InetSocketAddress[] favoredNodes)
+          throws IOException {
+            return this.create(f, permission,
+        overwrite ? EnumSet.of(CreateFlag.CREATE, CreateFlag.OVERWRITE)
+            : EnumSet.of(CreateFlag.CREATE), bufferSize, replication,
+        blockSize, progress, null, false);
+  }
+
   /**
    * Same as  
    * {@link #create(Path, FsPermission, boolean, int, short, long, 
@@ -352,7 +374,8 @@ public class DistributedFileSystem extends FileSystem {
   public HdfsDataOutputStream create(final Path f,
       final FsPermission permission, final boolean overwrite,
       final int bufferSize, final short replication, final long blockSize,
-      final Progressable progress, final InetSocketAddress[] favoredNodes)
+      final Progressable progress, final InetSocketAddress[] favoredNodes, 
+      final boolean compose)
           throws IOException {
     statistics.incrementWriteOps(1);
     Path absF = fixRelativePart(f);

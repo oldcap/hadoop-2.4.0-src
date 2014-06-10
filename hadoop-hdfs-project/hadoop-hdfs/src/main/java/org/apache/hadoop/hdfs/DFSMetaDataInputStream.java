@@ -76,52 +76,5 @@ import com.google.common.annotations.VisibleForTesting;
  * negotiation of the namenode and various datanodes as necessary.
  ****************************************************************/
 @InterfaceAudience.Private
-public class DFSMetaDataInputStream extends FSInputStream
-implements ByteBufferReadable, CanSetDropBehind, CanSetReadahead,
-    HasEnhancedByteBufferAccess {
-    	/**
-    	 * Close it down!
-    	 */
-    	@Override
-    	public synchronized void close() throws IOException {
-    	  if (closed) {
-    	    return;
-    	  }
-    	  dfsClient.checkOpen();
-
-    	  if (!extendedReadBuffers.isEmpty()) {
-    	    final StringBuilder builder = new StringBuilder();
-    	    extendedReadBuffers.visitAll(new IdentityHashStore.Visitor<ByteBuffer, Object>() {
-    	      private String prefix = "";
-    	      @Override
-    	      public void accept(ByteBuffer k, Object v) {
-    	        builder.append(prefix).append(k);
-    	        prefix = ", ";
-    	      }
-    	    });
-    	    DFSClient.LOG.warn("closing file " + src + ", but there are still " +
-    	        "unreleased ByteBuffers allocated by read().  " +
-    	        "Please release " + builder.toString() + ".");
-    	  }
-    	  if (blockReader != null) {
-    	    blockReader.close();
-    	    blockReader = null;
-    	  }
-    	  super.close();
-    	  closed = true;
-    	}
-
-    	@Override
-    	public synchronized int read() throws IOException {
-    	  int ret = read( oneByteBuf, 0, 1 );
-    	  return ( ret <= 0 ) ? -1 : (oneByteBuf[0] & 0xff);
-    	}
-
-    	@Override
-    	public int doRead(BlockReader blockReader, int off, int len,
-    	        ReadStatistics readStatistics) throws ChecksumException, IOException {
-    	    int nRead = blockReader.read(buf, off, len);
-    	    updateReadStatistics(readStatistics, nRead, blockReader);
-    	    return nRead;
-    	}
+public class DFSMetaDataInputStream extends DFSInputStream {
     }

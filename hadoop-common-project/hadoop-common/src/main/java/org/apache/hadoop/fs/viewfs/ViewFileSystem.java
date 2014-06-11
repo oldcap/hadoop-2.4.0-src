@@ -296,6 +296,11 @@ public class ViewFileSystem extends FileSystem {
          overwrite, bufferSize, replication, blockSize, progress);
   }
 
+  @Override
+  public FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
+      throws IOException {
+        return null;
+      }
   
   @Override
   public boolean delete(final Path f, final boolean recursive)

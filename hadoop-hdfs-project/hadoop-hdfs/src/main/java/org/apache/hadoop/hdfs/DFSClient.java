@@ -1304,6 +1304,28 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
   }
 
   /**
+   * Create an input stream that obtains a nodelist from the
+   * namenode, and then reads from all the right places.  Creates
+   * inner subclass of InputStream that does the right out-of-band
+   * work.
+   */
+  public DFSMetadataInputStream open(String src, int buffersize, boolean verifyChecksum, 
+    boolean compose)
+      throws IOException, UnresolvedLinkException {
+        // compose
+        LOG.info("[compose] DFSClient opening DFSMetadataInputStream " + src);
+        LocatedBlocks blockLocations = callGetBlockLocations(namenode, src, 0, Long.MAX_VALUE);
+        for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
+          DatanodeInfo[] di = lb.getLocations();
+          LOG.info("  [compose] block offset: " + lb.getStartOffset() + ", locations: " + di);
+        }
+        
+    checkOpen();
+    //    Get block info from namenode
+    return new DFSInputStream(this, src, buffersize, verifyChecksum);
+  }
+
+  /**
    * Get the namenode associated with this DFSClient object
    * @return the namenode associated with this DFSClient object
    */

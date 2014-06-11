@@ -77,21 +77,7 @@ import com.google.common.annotations.VisibleForTesting;
  ****************************************************************/
 @InterfaceAudience.Private
 public class DFSMetaDataInputStream extends DFSInputStream {
-	@VisibleForTesting
-	static boolean tcpReadsDisabledForTesting = false;
-	private final DFSClient dfsClient;
-	private boolean closed = false;
-	private final String src;
-	private BlockReader blockReader = null;
-	private final boolean verifyChecksum;
-	private LocatedBlocks locatedBlocks = null;
-	private long lastBlockBeingWrittenLength = 0;
-	private DatanodeInfo currentNode = null;
-	private LocatedBlock currentLocatedBlock = null;
-	private long pos = 0;
-	private long blockEnd = -1;
-	private CachingStrategy cachingStrategy;
-	private final ReadStatistics readStatistics = new ReadStatistics();
+
 	
 	DFSMetaDataInputStream(DFSClient dfsClient, String src, int buffersize, boolean verifyChecksum
 		) throws IOException, UnresolvedLinkException {
@@ -99,8 +85,5 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		this.verifyChecksum = verifyChecksum;
 		this.buffersize = buffersize;
 		this.src = src;
-		this.cachingStrategy =
-		dfsClient.getDefaultReadCachingStrategy();
-		openInfo();
 	}
 }

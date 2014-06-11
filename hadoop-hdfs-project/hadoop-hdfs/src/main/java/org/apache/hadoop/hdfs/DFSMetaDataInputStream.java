@@ -81,4 +81,12 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		) throws IOException, UnresolvedLinkException {
 		super(dfsClient, src, buffersize, verifyChecksum);
 	}
+
+	/**
+	 * Read the entire buffer.
+	 */
+	@Override
+	public synchronized int read(final byte buf[], int off, int len) throws IOException {
+		return 0;
+	}
 }

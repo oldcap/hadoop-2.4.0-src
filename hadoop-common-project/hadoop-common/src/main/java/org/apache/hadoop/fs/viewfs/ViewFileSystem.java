@@ -297,10 +297,17 @@ public class ViewFileSystem extends FileSystem {
   }
 
   @Override
-  public FSDataOutputStream create(Path f, boolean overwrite, boolean compose)
-      throws IOException {
-        return null;
-      }
+  public FSDataOutputStream create(Path f,
+    FsPermission permission,
+    boolean overwrite,
+    int bufferSize,
+    short replication,
+    long blockSize,
+    Progressable progress,
+    boolean compose)
+  throws IOException {
+    return null;
+  }
   
   @Override
   public boolean delete(final Path f, final boolean recursive)

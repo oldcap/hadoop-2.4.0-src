@@ -77,5 +77,7 @@ import com.google.common.annotations.VisibleForTesting;
  ****************************************************************/
 @InterfaceAudience.Private
 public class DFSMetaDataInputStream extends DFSInputStream {
-	
+	DFSMetaDataInputStream(){
+		
+	}
 }

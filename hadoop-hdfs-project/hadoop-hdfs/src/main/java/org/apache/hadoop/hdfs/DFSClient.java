@@ -1309,7 +1309,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
    * inner subclass of InputStream that does the right out-of-band
    * work.
    */
-  public DFSInputStream open(String src, int buffersize, boolean verifyChecksum, 
+  public DFSMetadataInputStream open(String src, int buffersize, boolean verifyChecksum, 
     boolean compose)
       throws IOException, UnresolvedLinkException {
         // compose

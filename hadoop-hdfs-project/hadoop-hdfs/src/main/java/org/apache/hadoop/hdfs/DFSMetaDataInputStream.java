@@ -76,7 +76,7 @@ import com.google.common.annotations.VisibleForTesting;
  * negotiation of the namenode and various datanodes as necessary.
  ****************************************************************/
 @InterfaceAudience.Private
-public static class DFSMetaDataInputStream extends DFSInputStream {
+public class DFSMetaDataInputStream extends DFSInputStream {
 	DFSMetaDataInputStream(DFSClient dfsClient, String src, int buffersize, boolean verifyChecksum
 		) throws IOException, UnresolvedLinkException {
 

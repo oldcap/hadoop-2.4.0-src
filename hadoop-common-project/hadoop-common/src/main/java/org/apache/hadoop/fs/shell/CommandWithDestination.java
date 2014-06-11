@@ -271,7 +271,7 @@ abstract class CommandWithDestination extends FsCommand {
     src.fs.setVerifyChecksum(verifyChecksum);
     InputStream in = null;
     try {
-      in = src.fs.open(src.path);
+      in = src.fs.open(src.path, true);
       composeStreamToTarget(in, target);
     } finally {
       IOUtils.closeStream(in);

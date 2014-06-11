@@ -765,6 +765,16 @@ public abstract class FileSystem extends Configured implements Closeable {
   }
 
   /**
+   * Opens an FSDataInputStream at the indicated Path with
+   * compose flag.
+   * @param f the file to open
+   * @param compose the flag
+   */  
+  public FSDataInputStream open(Path f, boolean compose) throws IOException {
+    return open(f, getConf().getInt("io.file.buffer.size", 4096));
+  }
+
+  /**
    * Create an FSDataOutputStream at the indicated Path.
    * Files are overwritten by default.
    * @param f the file to create

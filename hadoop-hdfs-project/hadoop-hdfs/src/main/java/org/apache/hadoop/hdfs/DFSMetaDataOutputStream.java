@@ -121,7 +121,7 @@ import com.google.common.cache.RemovalNotification;
 public class DFSMetaDataOutputStream extends DFSOutputStream
 implements Syncable, CanSetDropBehind {
 	/** Construct a new output stream for creating a file. */
-	private DFSMetaDataOutputStream(DFSClient dfsClient, String src, HdfsFileStatus stat,
+	public DFSMetaDataOutputStream(DFSClient dfsClient, String src, HdfsFileStatus stat,
 	    EnumSet<CreateFlag> flag, Progressable progress,
 	    DataChecksum checksum, String[] favoredNodes) throws IOException {
 	}

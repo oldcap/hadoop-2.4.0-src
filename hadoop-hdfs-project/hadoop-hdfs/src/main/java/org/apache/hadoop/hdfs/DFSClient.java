@@ -120,7 +120,6 @@ import org.apache.hadoop.fs.VolumeId;
 import org.apache.hadoop.fs.permission.AclEntry;
 import org.apache.hadoop.fs.permission.AclStatus;
 import org.apache.hadoop.fs.permission.FsPermission;
-import org.apache.hadoop.hdfs.DFSMetaDataInputStream;
 import org.apache.hadoop.hdfs.client.HdfsDataInputStream;
 import org.apache.hadoop.hdfs.client.HdfsDataOutputStream;
 import org.apache.hadoop.hdfs.protocol.AclException;
@@ -1310,11 +1309,11 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
    * inner subclass of InputStream that does the right out-of-band
    * work.
    */
-  public DFSMetadataInputStream open(String src, int buffersize, boolean verifyChecksum, 
+  public DFSMetaDataInputStream open(String src, int buffersize, boolean verifyChecksum, 
     boolean compose)
       throws IOException, UnresolvedLinkException {
         // compose
-        LOG.info("[compose] DFSClient opening DFSMetadataInputStream " + src);
+        LOG.info("[compose] DFSClient opening DFSMetaDataInputStream " + src);
         LocatedBlocks blockLocations = callGetBlockLocations(namenode, src, 0, Long.MAX_VALUE);
         for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
           DatanodeInfo[] di = lb.getLocations();

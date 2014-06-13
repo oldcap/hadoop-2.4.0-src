@@ -79,6 +79,7 @@ import com.google.common.annotations.VisibleForTesting;
 public class DFSMetaDataInputStream extends DFSInputStream {
 	DFSMetaDataInputStream(DFSClient dfsClient, String src, int buffersize, boolean verifyChecksum
 		) throws IOException, UnresolvedLinkException {
+		DFSClient.LOG.info("[compose] Opening DFSMetaDataInputStream " + src);
 		super(dfsClient, src, buffersize, verifyChecksum);
 	}
 

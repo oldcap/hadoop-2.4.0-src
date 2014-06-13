@@ -295,19 +295,6 @@ public class ViewFileSystem extends FileSystem {
     return res.targetFileSystem.create(res.remainingPath, permission,
          overwrite, bufferSize, replication, blockSize, progress);
   }
-
-  @Override
-  public FSDataOutputStream create(Path f,
-    FsPermission permission,
-    boolean overwrite,
-    int bufferSize,
-    short replication,
-    long blockSize,
-    Progressable progress,
-    boolean compose)
-  throws IOException {
-    return null;
-  }
   
   @Override
   public boolean delete(final Path f, final boolean recursive)

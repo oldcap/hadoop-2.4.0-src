@@ -72,7 +72,7 @@ import org.apache.hadoop.util.IdentityHashStore;
 import com.google.common.annotations.VisibleForTesting;
 
 /****************************************************************
- * DFSInputStream provides bytes from a named file.  It handles 
+ * DFSMetaDataInputStream provides bytes from a named file.  It handles 
  * negotiation of the namenode and various datanodes as necessary.
  ****************************************************************/
 @InterfaceAudience.Private

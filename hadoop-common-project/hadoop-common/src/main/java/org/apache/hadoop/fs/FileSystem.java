@@ -957,14 +957,16 @@ public abstract class FileSystem extends Configured implements Closeable {
    * @throws IOException
    * @see #setPermission(Path, FsPermission)
    */
-  public abstract FSDataOutputStream create(Path f,
+  public FSDataOutputStream create(Path f,
       FsPermission permission,
       boolean overwrite,
       int bufferSize,
       short replication,
       long blockSize,
       Progressable progress,
-      boolean compose) throws IOException;
+      boolean compose) throws IOException {
+    return null;
+  }
 
   /**
    * Create an FSDataOutputStream at the indicated Path with write-progress

@@ -113,6 +113,20 @@ public class IOUtils {
   }
 
   /**
+   * Composes from one stream to another.
+   *
+   * @param in InputStream to read from
+   * @param out OutputStream to compose to
+   * @param conf the Configuration object
+   * @param close whether or not close the InputStream and 
+   * OutputStream at the end. The streams are closed in the finally clause.
+   */
+  public static void composeBytes(InputStream in, OutputStream out, Configuration conf, boolean close)
+    throws IOException {
+    copyBytes(in, out, conf.getInt("io.file.buffer.size", 4096),  close);
+  }
+
+  /**
    * Copies count bytes from one stream to another.
    *
    * @param in InputStream to read from

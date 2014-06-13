@@ -289,6 +289,29 @@ public class DistributedFileSystem extends FileSystem {
   }
 
   @Override
+  public FSDataInputStream open(Path f, final int bufferSize, final boolean compose)
+  throws IOException {
+    LOG.info("[compose] DistributedFilesystem open with compose flag: " + 
+      f);
+    statistics.incrementReadOps(1);
+    Path absF = fixRelativePart(f);
+    return new FileSystemLinkResolver<FSDataInputStream>() {
+      @Override
+      public FSDataInputStream doCall(final Path p)
+      throws IOException, UnresolvedLinkException {
+        return new HdfsDataInputStream(
+          dfs.open(getPathName(p), bufferSize, verifyChecksum, compose));
+      }
+      @Override
+      public FSDataInputStream next(final FileSystem fs, final Path p)
+      throws IOException {
+        return fs.open(p, bufferSize);
+      }
+    }.resolve(this, absF);
+  }
+}
+
+  @Override
   public FSDataInputStream open(Path f, final int bufferSize)
       throws IOException {
         LOG.info("[compose] DistributedFilesystem open: " + f);

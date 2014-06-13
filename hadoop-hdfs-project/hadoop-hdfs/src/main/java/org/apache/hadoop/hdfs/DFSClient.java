@@ -1322,7 +1322,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
         
     checkOpen();
     //    Get block info from namenode
-    return new DFSMetadataInputStream(this, src, buffersize, verifyChecksum);
+    return new DFSMetaDataInputStream(this, src, buffersize, verifyChecksum);
   }
 
   /**

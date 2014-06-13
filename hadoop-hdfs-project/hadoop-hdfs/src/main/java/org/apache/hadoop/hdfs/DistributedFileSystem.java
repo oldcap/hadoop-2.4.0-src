@@ -291,8 +291,7 @@ public class DistributedFileSystem extends FileSystem {
   @Override
   public FSDataInputStream open(Path f, final int bufferSize, final boolean compose)
   throws IOException {
-    LOG.info("[compose] DistributedFilesystem open with compose flag: " + 
-      f);
+    LOG.info("[compose] DistributedFilesystem open with compose flag: " + f);
     statistics.incrementReadOps(1);
     Path absF = fixRelativePart(f);
     return new FileSystemLinkResolver<FSDataInputStream>() {
@@ -309,7 +308,6 @@ public class DistributedFileSystem extends FileSystem {
       }
     }.resolve(this, absF);
   }
-}
 
   @Override
   public FSDataInputStream open(Path f, final int bufferSize)

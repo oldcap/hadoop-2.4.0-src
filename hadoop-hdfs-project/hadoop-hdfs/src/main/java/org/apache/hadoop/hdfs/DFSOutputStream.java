@@ -1618,7 +1618,7 @@ public class DFSOutputStream extends FSOutputSummer
     return out;
   }
 
-  static DFSOutputStream newStreamForCompose(DFSClient dfsClient, String src,
+  static DFSMetaDataOutputStream newStreamForCompose(DFSClient dfsClient, String src,
       FsPermission masked, EnumSet<CreateFlag> flag, boolean createParent,
       short replication, long blockSize, Progressable progress, int buffersize,
       DataChecksum checksum, String[] favoredNodes) throws IOException {
@@ -1639,7 +1639,7 @@ public class DFSOutputStream extends FSOutputSummer
                                      UnresolvedPathException.class,
                                      SnapshotAccessControlException.class);
     }
-    final DFSOutputStream out = new DFSOutputStream(dfsClient, src, stat,
+    final DFSMetaDataOutputStream out = new DFSMetaDataOutputStream(dfsClient, src, stat,
         flag, progress, checksum, favoredNodes);
     out.start();
     return out;

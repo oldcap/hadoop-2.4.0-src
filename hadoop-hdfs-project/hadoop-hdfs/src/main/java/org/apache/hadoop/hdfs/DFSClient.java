@@ -1443,18 +1443,23 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
    *  set to true, with compose flag
    */
   public DFSOutputStream create(String src, 
-                             FsPermission permission,
-                             EnumSet<CreateFlag> flag, 
-                             short replication,
-                             long blockSize,
-                             Progressable progress,
-                             int buffersize,
-                             ChecksumOpt checksumOpt,
-                             boolean compose)
-      throws IOException {
-        LOG.info("In DFSClient, create with compose flag");
-    return create(src, permission, flag, true,
+   FsPermission permission,
+   EnumSet<CreateFlag> flag, 
+   short replication,
+   long blockSize,
+   Progressable progress,
+   int buffersize,
+   ChecksumOpt checksumOpt,
+   boolean compose)
+  throws IOException {
+    LOG.info("In DFSClient, create with compose flag");
+    if (compose) {
+      return create(src, permission, flag, true,
         replication, blockSize, progress, buffersize, checksumOpt, null, compose);
+    } else {
+      return create(src, permission, flag, true,
+        replication, blockSize, progress, buffersize, checksumOpt, null);
+    }
   }
 
   /**

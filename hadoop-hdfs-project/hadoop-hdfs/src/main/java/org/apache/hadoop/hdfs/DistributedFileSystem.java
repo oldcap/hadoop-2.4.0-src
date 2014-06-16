@@ -396,6 +396,7 @@ public class DistributedFileSystem extends FileSystem {
       final int bufferSize, final short replication, final long blockSize,
       final Progressable progress, final InetSocketAddress[] favoredNodes)
           throws IOException {
+            LOG.info("[compose] DistributedFilesystem create without compose flag, returning HdfsDataOutputStream");
     statistics.incrementWriteOps(1);
     Path absF = fixRelativePart(f);
     return new FileSystemLinkResolver<HdfsDataOutputStream>() {
@@ -429,6 +430,7 @@ public class DistributedFileSystem extends FileSystem {
     final EnumSet<CreateFlag> cflags, final int bufferSize,
     final short replication, final long blockSize, final Progressable progress,
     final ChecksumOpt checksumOpt, final boolean compose) throws IOException {
+    LOG.info("[compose] DistributedFilesystem create with compose flag, returning FSOutputStream");
     statistics.incrementWriteOps(1);
     Path absF = fixRelativePart(f);
     return new FileSystemLinkResolver<FSDataOutputStream>() {

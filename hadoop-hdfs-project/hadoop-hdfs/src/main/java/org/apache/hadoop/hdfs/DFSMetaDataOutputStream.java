@@ -127,7 +127,8 @@ implements Syncable, CanSetDropBehind {
 		super(dfsClient, src, stat, flag, progress, checksum, favoredNodes);
 	}
 
+	@Override
 	synchronized void start() {
-
+		DFSClient.LOG.info("[compose] Starting DFSMetaDataOutputStream");
 	}
 }

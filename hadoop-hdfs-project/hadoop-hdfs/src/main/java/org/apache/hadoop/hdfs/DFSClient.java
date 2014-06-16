@@ -1550,7 +1550,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
    * replication, to move the blocks from favored nodes. A value of null means
    * no favored nodes for this create
    */
-  public DFSDataOutputStream create(String src, 
+  public DFSOutputStream create(String src, 
                              FsPermission permission,
                              EnumSet<CreateFlag> flag, 
                              boolean createParent,

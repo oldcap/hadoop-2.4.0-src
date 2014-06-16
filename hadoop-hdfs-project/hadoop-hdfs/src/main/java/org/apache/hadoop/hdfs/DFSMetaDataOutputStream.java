@@ -125,4 +125,8 @@ implements Syncable, CanSetDropBehind {
 	    EnumSet<CreateFlag> flag, Progressable progress,
 	    DataChecksum checksum, String[] favoredNodes) throws IOException {
 	}
+
+	synchronized void start() {
+		
+	}
 }

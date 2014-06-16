@@ -1574,7 +1574,7 @@ public class DFSClient implements java.io.Closeable, RemotePeerFactory {
                          + favoredNodes[i].getPort();
       }
     }
-    final DFSOutputStream result = DFSOutputStream.newStreamForCompose(this,
+    final DFSMetaDataOutputStream result = DFSOutputStream.newStreamForCompose(this,
         src, masked, flag, createParent, replication, blockSize, progress,
         buffersize, dfsClientConf.createChecksum(checksumOpt), favoredNodeStrs);
     beginFileLease(src, result);

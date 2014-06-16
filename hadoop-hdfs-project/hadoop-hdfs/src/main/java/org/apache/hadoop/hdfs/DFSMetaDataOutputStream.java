@@ -124,9 +124,10 @@ implements Syncable, CanSetDropBehind {
 	public DFSMetaDataOutputStream(DFSClient dfsClient, String src, HdfsFileStatus stat,
 	    EnumSet<CreateFlag> flag, Progressable progress,
 	    DataChecksum checksum, String[] favoredNodes) throws IOException {
+		super(dfsClient, src, stat, flag, progress, checksum, favoredNodes);
 	}
 
 	synchronized void start() {
-		
+
 	}
 }

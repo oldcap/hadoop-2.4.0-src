@@ -118,7 +118,7 @@ import com.google.common.cache.RemovalNotification;
  * starts sending packets from the dataQueue.
 ****************************************************************/
 @InterfaceAudience.Private
-public class DFSMetaDataOutputStream extends DFSOutputStream
+public class DFSMetaDataOutputStream extends FSDataOutputStream
 implements Syncable, CanSetDropBehind {
 	/** Construct a new output stream for creating a file. */
 	public DFSMetaDataOutputStream(DFSClient dfsClient, String src, HdfsFileStatus stat,

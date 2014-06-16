@@ -37,6 +37,12 @@ public class HdfsDataOutputStream extends FSDataOutputStream {
     super(out, stats, startPosition);
   }
 
+  public class HdfsDataOutputStream extends FSDataOutputStream {
+    public HdfsDataOutputStream(DFSMetaDataOutputStream out, FileSystem.Statistics stats,
+        long startPosition) throws IOException {
+      super(out, stats, startPosition);
+    }
+
   public HdfsDataOutputStream(DFSOutputStream out, FileSystem.Statistics stats
       ) throws IOException {
     this(out, stats, 0L);

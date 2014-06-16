@@ -110,6 +110,7 @@ abstract public class FSOutputSummer extends OutputStream {
    * stream at most once if necessary.
    */
   private int write1(byte b[], int off, int len) throws IOException {
+    System.out.println("[compose] FSOutputSummer, writing " + len + " bytes");
     if(count==0 && len>=buf.length) {
       // local buffer is empty and user data has one chunk
       // checksum and output data

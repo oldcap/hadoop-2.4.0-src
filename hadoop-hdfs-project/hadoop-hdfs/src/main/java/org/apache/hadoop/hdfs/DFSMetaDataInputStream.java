@@ -95,8 +95,8 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 	 */
 	@Override
 	public synchronized int read(final byte buf[], int off, int len) throws IOException {
-		DFSClient.LOG.info("[compose] Reading from DFSMetaDataInputStream " + off + "," 
-			+ len + ". File length is " + getFileLength() + ", position is " + pos);
+		// DFSClient.LOG.info("[compose] Reading from DFSMetaDataInputStream " + off + "," 
+		// 	+ len + ". File length is " + getFileLength() + ", position is " + pos);
 		if (pos < 0 || pos >= getFileLength()) {
 			return -1;
 		}
@@ -106,7 +106,7 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 
 		for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
 			DatanodeInfo[] di = lb.getLocations();
-			DFSClient.LOG.info("  [compose] block offset: " + lb.getStartOffset() + ", locations: " + di);
+			// DFSClient.LOG.info("  [compose] block offset: " + lb.getStartOffset() + ", locations: " + di);
 		}
 		if (pos + len < getFileLength()) {
 			pos += len;

@@ -100,7 +100,7 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 			return len;
 		} else {
 			pos = getFileLength();
-			return getFileLength - pos;
+			return getFileLength() - pos;
 		}
 		// dfsClient.checkOpen();
 		// if (closed) {

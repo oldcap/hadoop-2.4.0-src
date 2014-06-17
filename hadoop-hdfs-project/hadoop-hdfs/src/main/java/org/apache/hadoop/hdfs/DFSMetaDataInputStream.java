@@ -77,6 +77,9 @@ import com.google.common.annotations.VisibleForTesting;
  ****************************************************************/
 @InterfaceAudience.Private
 public class DFSMetaDataInputStream extends DFSInputStream {
+	private long pos = 0;
+	private final DFSClient dfsClient;
+
 	DFSMetaDataInputStream(DFSClient dfsClient, String src, int buffersize, boolean verifyChecksum
 		) throws IOException, UnresolvedLinkException {
 		super(dfsClient, src, buffersize, verifyChecksum);
@@ -90,7 +93,8 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 	public synchronized int read(final byte buf[], int off, int len) throws IOException {
 		DFSClient.LOG.info("[compose] Reading from DFSMetaDataInputStream " + off + "," 
 			+ len);
-		long pos = getPos();
+		return 0;
+		// if (pos + len)
 		// dfsClient.checkOpen();
 		// if (closed) {
 		// 	throw new IOException("Stream closed");

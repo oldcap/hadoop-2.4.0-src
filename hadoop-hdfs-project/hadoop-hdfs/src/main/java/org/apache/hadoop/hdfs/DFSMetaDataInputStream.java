@@ -97,6 +97,8 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		if (pos < 0 || pos >= getFileLength()) {
 			return -1;
 		}
+
+		dfsClient.getBlockStorageLocations();
 		if (pos + len < getFileLength()) {
 			pos += len;
 			return len;

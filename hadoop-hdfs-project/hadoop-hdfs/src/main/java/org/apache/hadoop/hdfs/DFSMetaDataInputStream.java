@@ -94,8 +94,14 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 	public synchronized int read(final byte buf[], int off, int len) throws IOException {
 		DFSClient.LOG.info("[compose] Reading from DFSMetaDataInputStream " + off + "," 
 			+ len);
-		return 0;
-		// if (pos + len)
+		
+		if (pos + len <= getFileLength()) {
+			pos += len;
+			return len;
+		} else {
+			pos = getFileLength();
+			return getFileLength - pos;
+		}
 		// dfsClient.checkOpen();
 		// if (closed) {
 		// 	throw new IOException("Stream closed");

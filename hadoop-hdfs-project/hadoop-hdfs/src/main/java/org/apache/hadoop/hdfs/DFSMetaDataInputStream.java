@@ -95,7 +95,7 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		DFSClient.LOG.info("[compose] Reading from DFSMetaDataInputStream " + off + "," 
 			+ len);
 		
-		if (pos + len <= getFileLength()) {
+		if (pos + len < getFileLength()) {
 			pos += len;
 			return len;
 		} else {

@@ -25,7 +25,5 @@ import "Security.proto";
 import "hdfs.proto";
 
 message MetaDataInputProto {
-  required Status status = 1;
-
   optional string firstBadLink = 2;
 }

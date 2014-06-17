@@ -101,7 +101,13 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 			return -1;
 		}
 
-		dfsClient.callGetBlockLocations(dfsClient.namenode, src, 0, Long.MAX_VALUE);
+		LocatedBlocks blockLocations = 
+			dfsClient.getLocatedBlocks(src, pos, len);
+
+		for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
+			DatanodeInfo[] di = lb.getLocations();
+			DFSClient.LOG.info("  [compose] block offset: " + lb.getStartOffset() + ", locations: " + di);
+		}
 		if (pos + len < getFileLength()) {
 			pos += len;
 			return len;
@@ -130,7 +136,7 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		// 				realLen = (int) Math.min(realLen, locatedBlocks.getFileLength());
 		// 			}
 		// 			int result = readBuffer(strategy, off, realLen, corruptedBlockMap);
-					
+
 		// 			if (result >= 0) {
 		// 				pos += result;
 		// 			} else {

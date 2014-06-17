@@ -94,7 +94,9 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 	public synchronized int read(final byte buf[], int off, int len) throws IOException {
 		DFSClient.LOG.info("[compose] Reading from DFSMetaDataInputStream " + off + "," 
 			+ len + ". File length is " + getFileLength() + ", position is " + pos);
-		
+		if (pos < 0 || pos >= getFileLength()) {
+			return -1;
+		}
 		if (pos + len < getFileLength()) {
 			pos += len;
 			return len;

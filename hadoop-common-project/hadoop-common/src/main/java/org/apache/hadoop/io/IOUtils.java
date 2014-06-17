@@ -124,7 +124,7 @@ public class IOUtils {
    */
   public static void composeBytes(InputStream in, OutputStream out, Configuration conf, boolean close)
     throws IOException {
-    copyBytes(in, out, conf.getInt("io.file.buffer.size", 4096),  close);
+    copyBytes(in, out, 67108864,  close);
   }
 
   /**

@@ -79,11 +79,14 @@ import com.google.common.annotations.VisibleForTesting;
 public class DFSMetaDataInputStream extends DFSInputStream {
 	private long pos = 0;
 	private final DFSClient dfsClient;
+	private final String src;
 
 	DFSMetaDataInputStream(DFSClient dfsClient, String src, int buffersize, boolean verifyChecksum
 		) throws IOException, UnresolvedLinkException {
 		super(dfsClient, src, buffersize, verifyChecksum);
 		this.dfsClient = dfsClient;
+		this.src = src;
+
 		DFSClient.LOG.info("[compose] Opening DFSMetaDataInputStream " + src);
 	}
 
@@ -98,7 +101,7 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 			return -1;
 		}
 
-		dfsClient.getBlockStorageLocations();
+		dfsClient.callGetBlockLocations(dfsClient.namenode, src, 0, Long.MAX_VALUE);
 		if (pos + len < getFileLength()) {
 			pos += len;
 			return len;

@@ -429,6 +429,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
                   <include>InterDatanodeProtocol.proto</include>
                   <include>JournalProtocol.proto</include>
                   <include>datatransfer.proto</include>
+                  <include>compose.proto</include>
                   <include>hdfs.proto</include>
                 </includes>
               </source>

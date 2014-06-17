@@ -57,6 +57,7 @@ import org.apache.hadoop.hdfs.protocol.ExtendedBlock;
 import org.apache.hadoop.hdfs.protocol.LocatedBlock;
 import org.apache.hadoop.hdfs.protocol.LocatedBlocks;
 import org.apache.hadoop.hdfs.protocol.datatransfer.InvalidEncryptionKeyException;
+import org.apache.hadoop.hdfs.protocol.proto.FileComposeProtos.MetaDataInputProto;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
 import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
@@ -104,9 +105,11 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		LocatedBlocks blockLocations = 
 			dfsClient.getLocatedBlocks(src, pos, len);
 
+		MetaDataInputProto.Builder bld = MetaDataInputProto.newBuilder();
+
 		for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
 			DatanodeInfo[] di = lb.getLocations();
-			// DFSClient.LOG.info("  [compose] block offset: " + lb.getStartOffset() + ", locations: " + di);
+			DFSClient.LOG.info("  [compose] block offset: " + lb.getStartOffset() + ", locations: " + di);
 		}
 		if (pos + len < getFileLength()) {
 			pos += len;

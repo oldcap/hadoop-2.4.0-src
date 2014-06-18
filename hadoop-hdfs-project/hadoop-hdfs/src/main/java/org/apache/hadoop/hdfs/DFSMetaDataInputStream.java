@@ -126,9 +126,9 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 
 		byte[] metaDataInput = mdiBld.build().toByteArray();
 		System.arraycopy(metaDataInput, 0, 
-			target, 0, 
+			buf, 0, 
 			metaDataInput.length);
-		
+
 		if (pos + len < getFileLength()) {
 			pos += len;
 			return len;

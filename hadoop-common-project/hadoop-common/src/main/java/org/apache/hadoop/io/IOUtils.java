@@ -131,7 +131,9 @@ public class IOUtils {
     int bytesRead = in.read(buf);
     while (bytesRead >= 0) {
       // System.out.println("[compose] in copyBytes, bytesRead=" + bytesRead);
-      out.write(buf, 0, bytesRead);
+      byte[] writeBuf = new byte[bytesRead];
+      System.arraycopy(buf, 0, writeBuf, 0, bytesRead);
+      out.write(writeBuf, 0, bytesRead);
       if ((ps != null) && ps.checkError()) {
         throw new IOException("Unable to write to output stream.");
       }

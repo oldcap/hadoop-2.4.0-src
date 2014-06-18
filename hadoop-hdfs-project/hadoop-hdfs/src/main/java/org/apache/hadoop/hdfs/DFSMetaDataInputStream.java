@@ -132,10 +132,10 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 
 		if (pos + len < getFileLength()) {
 			pos += len;
-			return len;
 		} else {
 			pos = getFileLength();
-			return (int)(getFileLength() - pos);
 		}
+
+		return metaDataInput.length
 	}
 }

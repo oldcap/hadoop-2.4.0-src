@@ -132,7 +132,7 @@ implements Syncable, CanSetDropBehind {
 	}
 
 	@Override
-	protected synchronized void writeChunk(byte[] b, int offset, int len, byte[] checksum) 
+	protected synchronized void write(byte[] b, int offset, int len) 
 	throws IOException {
 		DFSClient.LOG.info("[compose] DFSMetaDataOutputStream writing a chunk with size " + 
 			b.length);

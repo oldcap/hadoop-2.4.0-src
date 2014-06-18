@@ -124,7 +124,18 @@ public class IOUtils {
    */
   public static void composeBytes(InputStream in, OutputStream out, Configuration conf, boolean close)
     throws IOException {
-    copyBytes(in, out, 67108864,  close);
+
+    int buffSize = 4096;
+    byte buf[] = new byte[buffSize];
+    int bytesRead = in.read(buf);
+    while (bytesRead >= 0) {
+      // System.out.println("[compose] in copyBytes, bytesRead=" + bytesRead);
+      out.write(buf, 0, bytesRead);
+      if ((ps != null) && ps.checkError()) {
+        throw new IOException("Unable to write to output stream.");
+      }
+      bytesRead = in.read(buf);
+    }
   }
 
   /**

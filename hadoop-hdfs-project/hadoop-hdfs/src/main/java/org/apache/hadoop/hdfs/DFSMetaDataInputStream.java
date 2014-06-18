@@ -110,15 +110,18 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
 			MetaDataInputProto.LocatedBlockProto.Builder lbBld 
 				= MetaDataInputProto.LocatedBlockProto.newBuilder();
+			lbBld.setStartOffset(pos);
 			DFSClient.LOG.info("[compose] block offset: " + lb.getStartOffset() + ", location: ");
 			for (DatanodeInfo di : lb.getLocations()) {
 				MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.Builder diBld 
 					= MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.newBuilder();
 				diBld.setIpAddress(di.getIpAddr());
 				diBld.setXferPort(di.getXferPort());
+				diBld.setHostName(di.getHostName());
 				DFSClient.LOG.info("  [compose] location: " + di);
+				lbBld.setDi(diBld.build());
 			}
-			
+			mdiBld.setLb(lbBld.build());
 		}
 		if (pos + len < getFileLength()) {
 			pos += len;

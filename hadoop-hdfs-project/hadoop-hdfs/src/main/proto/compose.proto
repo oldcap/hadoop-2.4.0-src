@@ -24,6 +24,13 @@ package hadoop.hdfs;
 import "Security.proto";
 import "hdfs.proto";
 
+message DatanodeInfo {
+	required string ipAddress = 1;
+	optional string hostName = 2;
+	required string xferPort = 3;
+}
+
 message MetaDataInputProto {
-  optional string firstBadLink = 2;
+	required long startOffset = 1;
+	repeated DatanodeInfo = 2;
 }

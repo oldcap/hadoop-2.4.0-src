@@ -112,8 +112,9 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
 			LocatedBlockProto.Builder lbBld = LocatedBlockProto.newBuilder();
 			DFSClient.LOG.info("[compose] block offset: " + lb.getStartOffset() + ", location: ");
-			for (DatanodeInfo di = lb.getLocations()) {
+			for (DatanodeInfo di : lb.getLocations()) {
 				DatanodeInfoProto.Builder diBld = DatanodeInfoProto.newBuilder();
+				diBld.setIpAddress(di.getIpAddr());
 				DFSClient.LOG.info("  [compose] location: " + di);
 			}
 			

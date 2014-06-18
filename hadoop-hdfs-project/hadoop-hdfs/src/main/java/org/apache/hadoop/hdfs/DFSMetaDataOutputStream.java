@@ -125,6 +125,7 @@ implements Syncable, CanSetDropBehind {
 	private String src;
 	private final long fileId;
 	private ExtendedBlock block = null;
+	private Socket s;
 
 	/** Construct a new output stream for creating a file. */
 	public DFSMetaDataOutputStream(DFSClient dfsClient, String src, HdfsFileStatus stat,
@@ -156,7 +157,9 @@ implements Syncable, CanSetDropBehind {
 			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
 				block, null, fileId, favoredNodes);
 			block = lb.getBlock();
-			out = new DataOutputStream(new BufferedOutputStream(unbufOut,
+			s = createSocketForPipeline(nodes[0], nodes.length, dfsClient);
+			OutputStream unbufOut = NetUtils.getOutputStream(s, writeTimeout);
+			DataOutputStream out = new DataOutputStream(new BufferedOutputStream(unbufOut,
 				HdfsConstants.SMALL_BUFFER_SIZE));
 			new Sender(out).touchBlock(block, accessToken, dfsClient.clientName,
 			    nodes, null, null, recoveryFlag? stage.getRecoveryStage() : stage, 

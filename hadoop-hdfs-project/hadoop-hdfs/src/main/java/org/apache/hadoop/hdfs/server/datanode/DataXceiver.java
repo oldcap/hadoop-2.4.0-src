@@ -789,7 +789,7 @@ class DataXceiver extends Receiver implements Runnable {
       final String clientname,
       final DatanodeInfo[] targets,
       final DatanodeInfo srcDataNode,
-      final String localFileName;
+      final String localFileName,
       final BlockConstructionStage stage,
       final int pipelineSize,
       final long minBytesRcvd,

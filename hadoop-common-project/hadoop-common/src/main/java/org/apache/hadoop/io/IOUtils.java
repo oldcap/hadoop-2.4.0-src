@@ -125,6 +125,7 @@ public class IOUtils {
   public static void composeBytes(InputStream in, OutputStream out, Configuration conf, boolean close)
     throws IOException {
 
+    PrintStream ps = out instanceof PrintStream ? (PrintStream)out : null;
     int buffSize = 4096;
     byte buf[] = new byte[buffSize];
     int bytesRead = in.read(buf);

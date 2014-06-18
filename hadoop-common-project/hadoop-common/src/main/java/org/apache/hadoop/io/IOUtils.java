@@ -126,7 +126,7 @@ public class IOUtils {
     throws IOException {
 
     PrintStream ps = out instanceof PrintStream ? (PrintStream)out : null;
-    int buffSize = 4096;
+    int buffSize = 67108864;
     byte buf[] = new byte[buffSize];
     int bytesRead = in.read(buf);
     while (bytesRead >= 0) {

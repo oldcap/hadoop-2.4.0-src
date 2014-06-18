@@ -32,5 +32,5 @@ message DatanodeInfo {
 
 message MetaDataInputProto {
 	required long startOffset = 1;
-	repeated DatanodeInfo = 2;
+	repeated DatanodeInfo di = 2;
 }

@@ -55,7 +55,7 @@ public abstract class DataTransferProtoUtil {
     return BlockConstructionStage.valueOf(stage.name());
   }
 
-  static OpTouchBlockProto.BlockConstructionStage toProto(
+  static OpTouchBlockProto.BlockConstructionStage toTouchProto(
       BlockConstructionStage stage) {
     return OpTouchBlockProto.BlockConstructionStage.valueOf(stage.name());
   }

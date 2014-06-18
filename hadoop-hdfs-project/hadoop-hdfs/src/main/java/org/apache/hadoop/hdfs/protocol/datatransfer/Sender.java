@@ -18,6 +18,7 @@
 package org.apache.hadoop.hdfs.protocol.datatransfer;
 
 import static org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtoUtil.toProto;
+import static org.apache.hadoop.hdfs.protocol.datatransfer.DataTransferProtoUtil.toTouchProto;
 
 import java.io.DataOutput;
 import java.io.DataOutputStream;
@@ -165,12 +166,12 @@ public class Sender implements DataTransferProtocol {
         blk, clientName, blockToken);
     
     ChecksumProto checksumProto =
-      DataTransferProtoUtil.toProto(requestedChecksum);
+      DataTransferProtoUtil.toTouchProto(requestedChecksum);
 
     OpTouchBlockProto.Builder proto = OpTouchBlockProto.newBuilder()
       .setHeader(header)
       .addAllTargets(PBHelper.convert(targets, 1))
-      .setStage(toProto(stage))
+      .setStage(toTouchProto(stage))
       .setPipelineSize(pipelineSize)
       .setMinBytesRcvd(minBytesRcvd)
       .setMaxBytesRcvd(maxBytesRcvd)

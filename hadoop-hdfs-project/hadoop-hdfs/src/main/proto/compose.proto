@@ -26,8 +26,8 @@ import "hdfs.proto";
 
 message DatanodeInfo {
 	required string ipAddress = 1;
-	optional string hostName = 2;
-	required string xferPort = 3;
+	required string xferPort = 2;
+	optional string hostName = 3;
 }
 
 message MetaDataInputProto {

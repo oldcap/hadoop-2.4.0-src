@@ -155,7 +155,9 @@ implements Syncable, CanSetDropBehind {
 			}
 			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
 				block, null, fileId, favoredNodes);
-			DFSClient.LOG.info("[compose]  block starting offset: " + lbProto.getStartOffset());
+			DFSClient.LOG.info("[compose]  block starting offset: " + lbProto.getStartOffset() + 
+				", returned block ID: " + lb.getBlock().getBlockId() + " at pool" + 
+				lb.getBlock().getBlockId().getBlockPoolId());
 		}
 		// MetaDataInputProto.LocatedBlockProto lb = 
 	}

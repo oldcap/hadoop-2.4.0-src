@@ -138,5 +138,9 @@ implements Syncable, CanSetDropBehind {
 		DFSClient.LOG.info("[compose] DFSMetaDataOutputStream writing a chunk with size " + 
 			b.length);
 		MetaDataInputProto mdi = MetaDataInputProto.parseFrom(b);
+		for (MetaDataInputProto.LocatedBlockProto lb : mdi.getLbList()) {
+			DFSClient.LOG.info("[compose]  block starting offset: " + lb.getStartOffset());
+		}
+		// MetaDataInputProto.LocatedBlockProto lb = 
 	}
 }

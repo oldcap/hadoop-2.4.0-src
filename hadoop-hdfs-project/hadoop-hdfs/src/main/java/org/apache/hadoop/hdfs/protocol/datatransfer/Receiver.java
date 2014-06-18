@@ -70,6 +70,9 @@ public abstract class Receiver implements DataTransferProtocol {
     case WRITE_BLOCK:
       opWriteBlock(in);
       break;
+    case TOUCH_BLOCK:
+      opTouchBlock(in);
+      break;
     case REPLACE_BLOCK:
       opReplaceBlock(in);
       break;
@@ -126,6 +129,25 @@ public abstract class Receiver implements DataTransferProtocol {
         proto.getHeader().getClientName(),
         PBHelper.convert(proto.getTargetsList()),
         PBHelper.convert(proto.getSource()),
+        fromProto(proto.getStage()),
+        proto.getPipelineSize(),
+        proto.getMinBytesRcvd(), proto.getMaxBytesRcvd(),
+        proto.getLatestGenerationStamp(),
+        fromProto(proto.getRequestedChecksum()),
+        (proto.hasCachingStrategy() ?
+            getCachingStrategy(proto.getCachingStrategy()) :
+          CachingStrategy.newDefaultStrategy()));
+  }
+
+  /** Receive OP_TOUCH_BLOCK */
+  private void opTouchBlock(DataInputStream in) throws IOException {
+    final OpTouchBlockProto proto = OpTouchBlockProto.parseFrom(vintPrefixed(in));
+    touchBlock(PBHelper.convert(proto.getHeader().getBaseHeader().getBlock()),
+        PBHelper.convert(proto.getHeader().getBaseHeader().getToken()),
+        proto.getHeader().getClientName(),
+        PBHelper.convert(proto.getTargetsList()),
+        PBHelper.convert(proto.getSource()),
+        proto.getLocalFileName(),
         fromProto(proto.getStage()),
         proto.getPipelineSize(),
         proto.getMinBytesRcvd(), proto.getMaxBytesRcvd(),

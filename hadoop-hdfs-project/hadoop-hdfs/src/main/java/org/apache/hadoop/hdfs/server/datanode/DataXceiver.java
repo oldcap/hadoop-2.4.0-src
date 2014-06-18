@@ -784,6 +784,23 @@ class DataXceiver extends Receiver implements Runnable {
   }
 
   @Override
+  public void touchBlock(final ExtendedBlock block,
+      final Token<BlockTokenIdentifier> blockToken,
+      final String clientname,
+      final DatanodeInfo[] targets,
+      final DatanodeInfo srcDataNode,
+      final String localFileName;
+      final BlockConstructionStage stage,
+      final int pipelineSize,
+      final long minBytesRcvd,
+      final long maxBytesRcvd,
+      final long latestGenerationStamp,
+      DataChecksum requestedChecksum,
+      CachingStrategy cachingStrategy) throws IOException {
+    LOG.info("[compose] Receiving touch block request");
+  }
+
+  @Override
   public void transferBlock(final ExtendedBlock blk,
       final Token<BlockTokenIdentifier> blockToken,
       final String clientName,

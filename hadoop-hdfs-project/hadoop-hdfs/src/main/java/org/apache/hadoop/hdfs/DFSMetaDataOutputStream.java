@@ -157,7 +157,7 @@ implements Syncable, CanSetDropBehind {
 				block, null, fileId, favoredNodes);
 			DFSClient.LOG.info("[compose]  block starting offset: " + lbProto.getStartOffset() + 
 				", returned block ID: " + lb.getBlock().getBlockId() + " at pool" + 
-				lb.getBlock().getBlockId().getBlockPoolId());
+				lb.getBlock().getBlockPoolId());
 		}
 		// MetaDataInputProto.LocatedBlockProto lb = 
 	}

@@ -49,6 +49,16 @@ public abstract class DataTransferProtoUtil {
     return OpWriteBlockProto.BlockConstructionStage.valueOf(stage.name());
   }
 
+  static BlockConstructionStage fromProto(
+      OpTouchBlockProto.BlockConstructionStage stage) {
+    return BlockConstructionStage.valueOf(stage.name());
+  }
+
+  static OpTouchBlockProto.BlockConstructionStage toProto(
+      BlockConstructionStage stage) {
+    return OpTouchBlockProto.BlockConstructionStage.valueOf(stage.name());
+  }
+
   public static ChecksumProto toProto(DataChecksum checksum) {
     ChecksumTypeProto type = PBHelper.convert(checksum.getChecksumType());
     // ChecksumType#valueOf never returns null

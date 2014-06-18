@@ -97,6 +97,33 @@ public interface DataTransferProtocol {
       final CachingStrategy cachingStrategy) throws IOException;
 
   /**
+   * Touch a block to a datanode pipeline.
+   * 
+   * @param blk the block being written.
+   * @param blockToken security token for accessing the block.
+   * @param clientName client's name.
+   * @param targets target datanodes in the pipeline.
+   * @param source source datanode.
+   * @param stage pipeline stage.
+   * @param pipelineSize the size of the pipeline.
+   * @param minBytesRcvd minimum number of bytes received.
+   * @param maxBytesRcvd maximum number of bytes received.
+   * @param latestGenerationStamp the latest generation stamp of the block.
+   */
+  public void touchBlock(final ExtendedBlock blk,
+      final Token<BlockTokenIdentifier> blockToken,
+      final String clientName,
+      final DatanodeInfo[] targets,
+      final DatanodeInfo source,
+      final String localFileName,
+      final BlockConstructionStage stage,
+      final int pipelineSize,
+      final long minBytesRcvd,
+      final long maxBytesRcvd,
+      final long latestGenerationStamp,
+      final DataChecksum requestedChecksum,
+      final CachingStrategy cachingStrategy) throws IOException;
+  /**
    * Transfer a block to another datanode.
    * The block stage must be
    * either {@link BlockConstructionStage#TRANSFER_RBW}

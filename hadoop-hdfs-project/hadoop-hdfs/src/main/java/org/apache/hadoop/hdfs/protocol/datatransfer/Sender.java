@@ -147,6 +147,44 @@ public class Sender implements DataTransferProtocol {
   }
 
   @Override
+  public void touchBlock(final ExtendedBlock blk,
+      final Token<BlockTokenIdentifier> blockToken,
+      final String clientName,
+      final DatanodeInfo[] targets,
+      final DatanodeInfo source,
+      final String localFileName,
+      final BlockConstructionStage stage,
+      final int pipelineSize,
+      final long minBytesRcvd,
+      final long maxBytesRcvd,
+      final long latestGenerationStamp,
+      DataChecksum requestedChecksum,
+      final CachingStrategy cachingStrategy) throws IOException {
+    ClientOperationHeaderProto header = DataTransferProtoUtil.buildClientHeader(
+        blk, clientName, blockToken);
+    
+    ChecksumProto checksumProto =
+      DataTransferProtoUtil.toProto(requestedChecksum);
+
+    OpWriteBlockProto.Builder proto = OpWriteBlockProto.newBuilder()
+      .setHeader(header)
+      .addAllTargets(PBHelper.convert(targets, 1))
+      .setStage(toProto(stage))
+      .setPipelineSize(pipelineSize)
+      .setMinBytesRcvd(minBytesRcvd)
+      .setMaxBytesRcvd(maxBytesRcvd)
+      .setLatestGenerationStamp(latestGenerationStamp)
+      .setRequestedChecksum(checksumProto)
+      .setCachingStrategy(getCachingStrategy(cachingStrategy));
+    
+    if (source != null) {
+      proto.setSource(PBHelper.convertDatanodeInfo(source));
+    }
+
+    send(out, Op.WRITE_BLOCK, proto.build());
+  }
+
+  @Override
   public void transferBlock(final ExtendedBlock blk,
       final Token<BlockTokenIdentifier> blockToken,
       final String clientName,

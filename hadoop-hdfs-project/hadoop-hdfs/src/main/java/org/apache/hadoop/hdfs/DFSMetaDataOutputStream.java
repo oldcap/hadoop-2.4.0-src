@@ -124,6 +124,7 @@ implements Syncable, CanSetDropBehind {
 	private DFSClient dfsClient;
 	private String src;
 	private final long fileId;
+	private ExtendedBlock block = null;
 
 	/** Construct a new output stream for creating a file. */
 	public DFSMetaDataOutputStream(DFSClient dfsClient, String src, HdfsFileStatus stat,
@@ -147,7 +148,6 @@ implements Syncable, CanSetDropBehind {
 		MetaDataInputProto mdiProto = MetaDataInputProto.parseFrom(b);
 
 		for (MetaDataInputProto.LocatedBlockProto lbProto : mdiProto.getLbList()) {
-			ExtendedBlock block = null;
 			String[] favoredNodes = new String[lbProto.getDiList().size()];
 			int counter = 0;
 			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
@@ -155,6 +155,8 @@ implements Syncable, CanSetDropBehind {
 			}
 			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
 				block, null, fileId, favoredNodes);
+			block = lb.getBlock();
+			
 			DFSClient.LOG.info("[compose]  block starting offset: " + lbProto.getStartOffset() + 
 				", returned block ID: " + lb.getBlock().getBlockId() + " at pool" + 
 				lb.getBlock().getBlockPoolId());

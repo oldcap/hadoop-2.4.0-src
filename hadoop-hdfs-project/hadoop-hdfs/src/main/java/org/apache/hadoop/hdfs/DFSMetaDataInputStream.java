@@ -107,11 +107,13 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 
 		MetaDataInputProto.Builder mdiBld = MetaDataInputProto.newBuilder();
 
+		int lbCounter = 0;
 		for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
 			MetaDataInputProto.LocatedBlockProto.Builder lbBld 
 				= MetaDataInputProto.LocatedBlockProto.newBuilder();
 			lbBld.setStartOffset(pos);
 			DFSClient.LOG.info("[compose] block offset: " + lb.getStartOffset() + ", location: ");
+			int diCounter = 0;
 			for (DatanodeInfo di : lb.getLocations()) {
 				MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.Builder diBld 
 					= MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.newBuilder();
@@ -119,10 +121,12 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 				diBld.setXferPort(di.getXferPort());
 				diBld.setHostName(di.getHostName());
 				DFSClient.LOG.info("  [compose] location: " + di);
-				lbBld.setDi(diBld.build());
+				lbBld.setDi(diBld.build(), ++diCounter);
 			}
-			mdiBld.setLb(lbBld.build());
+			mdiBld.setLb(lbBld.build(), ++lbCounter);
 		}
+
+		mdiBld.build().toByteArray();
 		if (pos + len < getFileLength()) {
 			pos += len;
 			return len;

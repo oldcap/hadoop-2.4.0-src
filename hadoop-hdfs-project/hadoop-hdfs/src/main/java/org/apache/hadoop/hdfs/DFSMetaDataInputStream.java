@@ -125,6 +125,7 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		}
 
 		byte[] metaDataInput = mdiBld.build().toByteArray();
+		DFSClient.LOG.info("[compose] metaDataInput size = " + metaDataInput.length);
 		System.arraycopy(metaDataInput, 0, 
 			buf, 0, 
 			metaDataInput.length);

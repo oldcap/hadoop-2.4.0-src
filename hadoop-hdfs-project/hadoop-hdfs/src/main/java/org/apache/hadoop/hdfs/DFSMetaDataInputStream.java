@@ -58,6 +58,8 @@ import org.apache.hadoop.hdfs.protocol.LocatedBlock;
 import org.apache.hadoop.hdfs.protocol.LocatedBlocks;
 import org.apache.hadoop.hdfs.protocol.datatransfer.InvalidEncryptionKeyException;
 import org.apache.hadoop.hdfs.protocol.proto.FileComposeProtos.MetaDataInputProto;
+import org.apache.hadoop.hdfs.protocol.proto.FileComposeProtos.LocatedBlockProto;
+import org.apache.hadoop.hdfs.protocol.proto.FileComposeProtos.DatanodeInfoProto;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
 import org.apache.hadoop.hdfs.server.datanode.CachingStrategy;
@@ -105,11 +107,16 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		LocatedBlocks blockLocations = 
 			dfsClient.getLocatedBlocks(src, pos, len);
 
-		MetaDataInputProto.Builder bld = MetaDataInputProto.newBuilder();
+		MetaDataInputProto.Builder mdiBld = MetaDataInputProto.newBuilder();
 
 		for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
-			DatanodeInfo[] di = lb.getLocations();
-			DFSClient.LOG.info("  [compose] block offset: " + lb.getStartOffset() + ", locations: " + di);
+			LocatedBlockProto.Builder lbBld = LocatedBlockProto.newBuilder();
+			DFSClient.LOG.info("[compose] block offset: " + lb.getStartOffset() + ", location: ");
+			for (DatanodeInfo di = lb.getLocations()) {
+				DatanodeInfoProto.Builder diBld = DatanodeInfoProto.newBuilder();
+				DFSClient.LOG.info("  [compose] location: " + di);
+			}
+			
 		}
 		if (pos + len < getFileLength()) {
 			pos += len;

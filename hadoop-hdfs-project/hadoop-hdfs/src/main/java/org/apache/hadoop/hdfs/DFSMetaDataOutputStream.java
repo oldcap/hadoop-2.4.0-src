@@ -70,6 +70,7 @@ import org.apache.hadoop.hdfs.protocol.datatransfer.PipelineAck;
 import org.apache.hadoop.hdfs.protocol.datatransfer.Sender;
 import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.BlockOpResponseProto;
 import org.apache.hadoop.hdfs.protocol.proto.DataTransferProtos.Status;
+import org.apache.hadoop.hdfs.protocol.proto.FileComposeProtos.MetaDataInputProto;
 import org.apache.hadoop.hdfs.protocolPB.PBHelper;
 import org.apache.hadoop.hdfs.security.token.block.BlockTokenIdentifier;
 import org.apache.hadoop.hdfs.security.token.block.InvalidBlockTokenException;
@@ -136,5 +137,6 @@ implements Syncable, CanSetDropBehind {
 		throws IOException {
 		DFSClient.LOG.info("[compose] DFSMetaDataOutputStream writing a chunk with size " + 
 			b.length);
+		MetaDataInputProto mdi = MetaDataInputProto.parseFrom(b);
 	}
 }

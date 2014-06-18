@@ -136,57 +136,5 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 			pos = getFileLength();
 			return (int)(getFileLength() - pos);
 		}
-		// dfsClient.checkOpen();
-		// if (closed) {
-		// 	throw new IOException("Stream closed");
-		// }
-		// Map<ExtendedBlock,Set<DatanodeInfo>> corruptedBlockMap 
-		// = new HashMap<ExtendedBlock, Set<DatanodeInfo>>();
-		// failures = 0;
-		// if (pos < getFileLength()) {
-		// 	int retries = 2;
-		// 	while (retries > 0) {
-		// 		try {
-		//       // currentNode can be left as null if previous read had a checksum
-		//       // error on the same block. See HDFS-3067
-		// 			if (pos > blockEnd || currentNode == null) {
-		// 				currentNode = blockSeekTo(pos);
-		// 			}
-		// 			int realLen = (int) Math.min(len, (blockEnd - pos + 1L));
-		// 			if (locatedBlocks.isLastBlockComplete()) {
-		// 				realLen = (int) Math.min(realLen, locatedBlocks.getFileLength());
-		// 			}
-		// 			int result = readBuffer(strategy, off, realLen, corruptedBlockMap);
-
-		// 			if (result >= 0) {
-		// 				pos += result;
-		// 			} else {
-		//         // got a EOS from reader though we expect more data on it.
-		// 				throw new IOException("Unexpected EOS from the reader");
-		// 			}
-		// 			if (dfsClient.stats != null && result != -1) {
-		// 				dfsClient.stats.incrementBytesRead(result);
-		// 			}
-		// 			return result;
-		// 		} catch (ChecksumException ce) {
-		// 			throw ce;            
-		// 		} catch (IOException e) {
-		// 			if (retries == 1) {
-		// 				DFSClient.LOG.warn("DFS Read", e);
-		// 			}
-		// 			blockEnd = -1;
-		// 			if (currentNode != null) { addToDeadNodes(currentNode); }
-		// 			if (--retries == 0) {
-		// 				throw e;
-		// 			}
-		// 		} finally {
-		//       // Check if need to report block replicas corruption either read
-		//       // was successful or ChecksumException occured.
-		// 			reportCheckSumFailure(corruptedBlockMap, 
-		// 				currentLocatedBlock.getLocations().length);
-		// 		}
-		// 	}
-		// }
-		// return -1;
 	}
 }

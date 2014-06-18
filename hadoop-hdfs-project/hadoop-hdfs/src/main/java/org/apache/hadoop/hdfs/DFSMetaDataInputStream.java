@@ -136,6 +136,6 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 			pos = getFileLength();
 		}
 
-		return metaDataInput.length
+		return metaDataInput.length;
 	}
 }

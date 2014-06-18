@@ -121,11 +121,18 @@ import com.google.common.cache.RemovalNotification;
 @InterfaceAudience.Private
 public class DFSMetaDataOutputStream extends DFSOutputStream
 implements Syncable, CanSetDropBehind {
+	private DFSClient dfsClient;
+	private String src;
+	private final long fileId;
+
 	/** Construct a new output stream for creating a file. */
 	public DFSMetaDataOutputStream(DFSClient dfsClient, String src, HdfsFileStatus stat,
 		EnumSet<CreateFlag> flag, Progressable progress,
 		DataChecksum checksum, String[] favoredNodes) throws IOException {
 		super(dfsClient, src, stat, flag, progress, checksum, favoredNodes);
+		this.dfsClient = dfsClient;
+		this.src = src;
+		this.fileId = stat.getFileId();
 	}
 
 	synchronized void start() {
@@ -134,12 +141,21 @@ implements Syncable, CanSetDropBehind {
 
 	@Override
 	public synchronized void write(byte b[], int off, int len)
-		throws IOException {
+	throws IOException {
 		DFSClient.LOG.info("[compose] DFSMetaDataOutputStream writing a chunk with size " + 
 			b.length);
-		MetaDataInputProto mdi = MetaDataInputProto.parseFrom(b);
-		for (MetaDataInputProto.LocatedBlockProto lb : mdi.getLbList()) {
-			DFSClient.LOG.info("[compose]  block starting offset: " + lb.getStartOffset());
+		MetaDataInputProto mdiProto = MetaDataInputProto.parseFrom(b);
+
+		for (MetaDataInputProto.LocatedBlockProto lbProto : mdiProto.getLbList()) {
+			ExtendedBlock block = null;
+			String[] favoredNodes = new String[lbProto.getDiList().size()];
+			int counter = 0;
+			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
+				favoredNodes[counter++] = diProto.getIpAddress() + ":" + diProto.getXferPort();
+			}
+			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
+				block, null, fileId, favoredNodes);
+			DFSClient.LOG.info("[compose]  block starting offset: " + lbProto.getStartOffset());
 		}
 		// MetaDataInputProto.LocatedBlockProto lb = 
 	}

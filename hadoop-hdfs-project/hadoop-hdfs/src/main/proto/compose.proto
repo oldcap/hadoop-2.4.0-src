@@ -24,13 +24,14 @@ package hadoop.hdfs;
 import "Security.proto";
 import "hdfs.proto";
 
-message DatanodeInfo {
-	required string ipAddress = 1;
-	required string xferPort = 2;
-	optional string hostName = 3;
-}
+
 
 message MetaDataInputProto {
+	message DatanodeInfo {
+		required string ipAddress = 1;
+		required string xferPort = 2;
+		optional string hostName = 3;
+	}
 	required long startOffset = 1;
 	repeated DatanodeInfo di = 2;
 }

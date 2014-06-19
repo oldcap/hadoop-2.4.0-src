@@ -150,8 +150,9 @@ implements Syncable, CanSetDropBehind {
 		MetaDataInputProto mdiProto = MetaDataInputProto.parseFrom(b);
 
 		for (MetaDataInputProto.LocatedBlockProto lbProto : mdiProto.getLbList()) {
-			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream received LocatedBlock " + lbProto.getStartOffset());
 			String[] favoredNodes = new String[lbProto.getDiList().size()];
+			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream received LocatedBlock " + lbProto.getStartOffset() + 
+				", " + favoredNodes.length + " nodes.");
 			int counter = 0;
 			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
 				favoredNodes[counter++] = diProto.getIpAddr() + ":" + diProto.getXferPort();

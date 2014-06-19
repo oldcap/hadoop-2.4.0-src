@@ -105,7 +105,8 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		LocatedBlocks blockLocations = 
 			dfsClient.getLocatedBlocks(src, pos, len);
 
-		DFSClient.LOG.info("[compose] DFSMetaDataInputStream read() returned " + 
+		DFSClient.LOG.info("[compose] DFSMetaDataInputStream read() from " + pos 
+			+ "-" + len + ", returned " + 
 			blockLocations.locatedBlockCount() + " blocks");
 
 		MetaDataInputProto.Builder mdiBld = MetaDataInputProto.newBuilder();

@@ -195,6 +195,14 @@ class FsVolumeImpl implements FsVolumeSpi {
     return getBlockPoolSlice(bpid).createRbwFile(b);
   }
 
+  /**
+   * Touched files. They get moved to the finalized block directory when
+   * the block is finalized.
+   */
+  File createTouchedFile(String bpid, Block b) throws IOException {
+    return getBlockPoolSlice(bpid).createTouchedFile(b);
+  }
+
   File addBlock(String bpid, Block b, File f) throws IOException {
     return getBlockPoolSlice(bpid).addBlock(b, f);
   }

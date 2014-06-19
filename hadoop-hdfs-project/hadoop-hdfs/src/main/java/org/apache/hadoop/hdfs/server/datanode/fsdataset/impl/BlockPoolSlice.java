@@ -244,6 +244,15 @@ class BlockPoolSlice {
     return DatanodeUtil.createTmpFile(b, f);
   }
 
+  /**
+   * Touched files. They get moved to the finalized block directory when
+   * the block is finalized.
+   */
+  File createTouchedFile(Block b) throws IOException {
+    File f = new File(finalizedDir.dir, b.getBlockName());
+    return f;
+  }
+
   File addBlock(Block b, File f) throws IOException {
     File blockFile = finalizedDir.addBlock(b, f);
     File metaFile = FsDatasetUtil.getMetaFile(blockFile, b.getGenerationStamp());

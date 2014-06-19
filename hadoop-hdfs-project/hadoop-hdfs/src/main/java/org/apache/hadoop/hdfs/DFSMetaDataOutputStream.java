@@ -53,6 +53,7 @@ import org.apache.hadoop.hdfs.client.HdfsDataOutputStream;
 import org.apache.hadoop.hdfs.client.HdfsDataOutputStream.SyncFlag;
 import org.apache.hadoop.hdfs.protocol.DSQuotaExceededException;
 import org.apache.hadoop.hdfs.protocol.DatanodeInfo;
+import org.apache.hadoop.hdfs.protocol.DatanodeID;
 import org.apache.hadoop.hdfs.protocol.ExtendedBlock;
 import org.apache.hadoop.hdfs.protocol.HdfsConstants;
 import org.apache.hadoop.hdfs.protocol.HdfsFileStatus;
@@ -151,14 +152,22 @@ implements Syncable, CanSetDropBehind {
 		for (MetaDataInputProto.LocatedBlockProto lbProto : mdiProto.getLbList()) {
 			String[] favoredNodes = new String[lbProto.getDiList().size()];
 			int counter = 0;
-			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
-				favoredNodes[counter++] = diProto.getIpAddress() + ":" + diProto.getXferPort();
+			MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto;
+			for (diProto : lbProto.getDiList()) {
+				favoredNodes[counter++] = diProto.getIpAddr() + ":" + diProto.getXferPort();
 			}
 			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
 				block, null, fileId, favoredNodes);
 			block = lb.getBlock();
-			for (String dnAddr : favoredNodes) {
-				DatanodeInfo chosenNode = new DatanodeInfo(new DatanodeID(dnAddr));
+			for (diProto : lbProto.getDiList()) {
+				DatanodeInfo chosenNode = new DatanodeInfo(
+											new DatanodeID(diProto.getIpAddr(),
+												diProto.getHostName(),
+												diProto.getDatanodeUuid(),
+												diProto.getXferPort(),
+												diProto.getInfoPort(),
+												diProto.getInfoSecurePort(),
+												diProto.getIpcPort()));
 				s = createSocketForPipeline(chosenNode, 1, dfsClient);
 				OutputStream unbufOut = NetUtils.getOutputStream(s, writeTimeout);
 				DataOutputStream out = new DataOutputStream(new BufferedOutputStream(unbufOut,

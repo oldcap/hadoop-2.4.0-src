@@ -29,9 +29,14 @@ import "hdfs.proto";
 message MetaDataInputProto {
 	message LocatedBlockProto {
 		message DatanodeInfoProto {
-			required string ipAddress = 1;
-			required int32 xferPort = 2;
-			optional string hostName = 3;
+			required string ipAddr = 1;
+			required string hostName = 2;
+			optional peerHostName = 3;
+			required int32 xferPort = 4;
+			required int32 infoPort = 5;
+			optional int32 infoSecurePort = 6;
+			required int32 ipcPort = 7;
+			optional string datanodeUuid = 8;
 		}
 		required int64 startOffset = 1;
 		repeated DatanodeInfoProto di = 2;	

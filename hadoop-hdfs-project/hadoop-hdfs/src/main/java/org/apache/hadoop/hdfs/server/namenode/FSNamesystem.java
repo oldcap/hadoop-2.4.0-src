@@ -5840,6 +5840,7 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
     assert hasWriteLock();
     checkNameNodeSafeMode("Cannot get next block ID");
     final long blockId = blockIdGenerator.nextValue();
+    LOG.info("[compose] FSNamesystem generated next blockID " + blockId);
     getEditLog().logAllocateBlockId(blockId);
     // NB: callers sync the log
     return blockId;

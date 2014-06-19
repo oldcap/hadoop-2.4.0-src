@@ -168,6 +168,7 @@ implements Syncable, CanSetDropBehind {
 												diProto.getInfoSecurePort(),
 												diProto.getIpcPort()));
 				s = createSocketForPipeline(chosenNode, 1, dfsClient);
+				long writeTimeout = dfsClient.getDatanodeWriteTimeout(1);
 				OutputStream unbufOut = NetUtils.getOutputStream(s, writeTimeout);
 				DataOutputStream out = new DataOutputStream(new BufferedOutputStream(unbufOut,
 					HdfsConstants.SMALL_BUFFER_SIZE));

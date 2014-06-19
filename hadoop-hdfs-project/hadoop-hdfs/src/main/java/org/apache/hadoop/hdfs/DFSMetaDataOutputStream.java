@@ -150,6 +150,7 @@ implements Syncable, CanSetDropBehind {
 		MetaDataInputProto mdiProto = MetaDataInputProto.parseFrom(b);
 
 		for (MetaDataInputProto.LocatedBlockProto lbProto : mdiProto.getLbList()) {
+			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream received LocatedBlock " + lbProto.getStartOffset());
 			String[] favoredNodes = new String[lbProto.getDiList().size()];
 			int counter = 0;
 			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
@@ -157,7 +158,7 @@ implements Syncable, CanSetDropBehind {
 			}
 			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
 				block, null, fileId, favoredNodes);
-			DFSClient.LOG.info("[compose] block starting offset: " + lbProto.getStartOffset() + 
+			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream block starting offset: " + lbProto.getStartOffset() + 
 				", returned block ID: " + lb.getBlock().getBlockId() + " at pool " + 
 				lb.getBlock().getBlockPoolId());
 			block = lb.getBlock();

@@ -114,15 +114,15 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 			DFSClient.LOG.info("[compose] block offset: " + lb.getStartOffset() + ", location: ");
 			for (DatanodeInfo di : lb.getLocations()) {
 				MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.Builder diBld 
-					= MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.newBuilder().
-					setIpAddr(di.getIpAddr()).
-					setHostName(di.getHostName()).
-					setPeerHostName(di.getPeerHostName()).
-					setXferPort(di.getXferPort()).
-					setInfoPort(di.getInfoPort()).
-					setInfoSecurePort(di.getInfoSecurePort()).
-					setIpcPort(di.getIpcPort()).
-					setDatanodeUuid(di.getDatanodeUuid());
+					= MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.newBuilder();
+				diBld.setIpAddr(di.getIpAddr());
+				diBld.setHostName(di.getHostName());
+				diBld.setPeerHostName(di.getPeerHostName());
+				diBld.setXferPort(di.getXferPort());
+				diBld.setInfoPort(di.getInfoPort());
+				diBld.setInfoSecurePort(di.getInfoSecurePort());
+				diBld.setIpcPort(di.getIpcPort());
+				diBld.setDatanodeUuid(di.getDatanodeUuid());
 
 				
 				DFSClient.LOG.info("  [compose] location: " + di);

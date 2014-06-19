@@ -963,6 +963,20 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
   }
 
   /**
+   * Complete the block write!
+   */
+  @Override // FsDatasetSpi
+  public synchronized void finalizeTouchedBlock(ExtendedBlock b,
+    String localFileName) throws IOException {
+    if (Thread.interrupted()) {
+      // Don't allow data modifications from interrupted threads
+      throw new IOException("Cannot finalize block from Interrupted Thread");
+    }
+    ReplicaInfo replicaInfo = getReplicaInfo(b);
+    FsVolumeImpl v = (FsVolumeImpl)replicaInfo.getVolume();
+    File f = replicaInfo.getBlockFile();
+  }
+  /**
    * Remove the temporary block file (if any)
    */
   @Override // FsDatasetSpi

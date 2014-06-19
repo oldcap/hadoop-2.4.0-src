@@ -262,6 +262,13 @@ public interface FsDatasetSpi<V extends FsVolumeSpi> extends FSDatasetMBean {
   public void finalizeBlock(ExtendedBlock b) throws IOException;
 
   /**
+   * Touch a block pointing to the original block
+   * @param b
+   * @throws IOException
+   */
+  public void finalizeTouchedBlock(ExtendedBlock b, String localFileName) throws IOException;
+
+  /**
    * Unfinalizes the block previously opened for writing using writeToBlock.
    * The temporary file associated with this block is deleted.
    * @param b

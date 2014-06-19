@@ -168,7 +168,6 @@ public class Sender implements DataTransferProtocol {
     OpTouchBlockProto.Builder proto = OpTouchBlockProto.newBuilder()
       .setHeader(header)
       .addAllTargets(PBHelper.convert(targets, 1))
-      .setStage(toTouchProto(stage))
       .setPipelineSize(pipelineSize)
       .setMinBytesRcvd(minBytesRcvd)
       .setMaxBytesRcvd(maxBytesRcvd)

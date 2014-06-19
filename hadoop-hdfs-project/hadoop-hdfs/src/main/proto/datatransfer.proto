@@ -132,7 +132,7 @@ message OpTouchBlockProto {
     // transfer Finalized for adding datanodes
     TRANSFER_FINALIZED = 8;
   }
-  required BlockConstructionStage stage = 4;
+  optional BlockConstructionStage stage = 4;
   required uint32 pipelineSize = 5;
   required uint64 minBytesRcvd = 6;
   required uint64 maxBytesRcvd = 7;

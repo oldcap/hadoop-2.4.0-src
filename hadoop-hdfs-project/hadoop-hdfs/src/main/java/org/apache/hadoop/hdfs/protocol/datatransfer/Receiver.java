@@ -64,7 +64,6 @@ public abstract class Receiver implements DataTransferProtocol {
 
   /** Process op by the corresponding method. */
   protected final void processOp(Op op) throws IOException {
-    System.out.println("[compose] Received op " + op);
     switch(op) {
     case READ_BLOCK:
       opReadBlock();

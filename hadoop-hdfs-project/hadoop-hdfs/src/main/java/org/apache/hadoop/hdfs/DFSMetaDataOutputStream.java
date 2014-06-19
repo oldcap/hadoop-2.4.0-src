@@ -173,6 +173,7 @@ implements Syncable, CanSetDropBehind {
 				DataOutputStream out = new DataOutputStream(new BufferedOutputStream(unbufOut,
 					HdfsConstants.SMALL_BUFFER_SIZE));
 				DatanodeInfo[] targets = {chosenNode};
+				DFSClient.LOG.info("[compose] Connecting to DN " + chosenNode);
 				new Sender(out).touchBlock(block, lb.getBlockToken(), dfsClient.clientName,
 					targets, null, "localfilename", null, 
 					1, 0, 0, 0, null, null);

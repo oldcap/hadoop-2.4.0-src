@@ -165,8 +165,12 @@ public class Sender implements DataTransferProtocol {
     ClientOperationHeaderProto header = DataTransferProtoUtil.buildClientHeader(
         blk, clientName, blockToken);
     
-    ChecksumProto checksumProto =
+    ChecksumProto checksumProto;
+    if (requestedChecksum != null) {
       DataTransferProtoUtil.toProto(requestedChecksum);
+    } else {
+      checksumProto = new ChecksumProto();
+    }
 
     OpTouchBlockProto.Builder proto = OpTouchBlockProto.newBuilder()
       .setHeader(header)

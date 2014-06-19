@@ -174,7 +174,7 @@ implements Syncable, CanSetDropBehind {
 					HdfsConstants.SMALL_BUFFER_SIZE));
 				DatanodeInfo[] targets = {chosenNode};
 				new Sender(out).touchBlock(block, lb.getBlockToken(), dfsClient.clientName,
-					targets, null, null, null, 
+					targets, null, "localfilename", null, 
 					1, 0, 0, 0, null, null);
 			}
 

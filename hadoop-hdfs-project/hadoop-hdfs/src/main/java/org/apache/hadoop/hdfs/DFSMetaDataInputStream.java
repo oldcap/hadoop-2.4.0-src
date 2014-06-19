@@ -117,7 +117,9 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 					= MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.newBuilder();
 				diBld.setIpAddr(di.getIpAddr());
 				diBld.setHostName(di.getHostName());
-				diBld.setPeerHostName(di.getPeerHostName());
+				if (di.getPeerHostName() != null) {
+					diBld.setPeerHostName(di.getPeerHostName());
+				}
 				diBld.setXferPort(di.getXferPort());
 				diBld.setInfoPort(di.getInfoPort());
 				diBld.setInfoSecurePort(di.getInfoSecurePort());

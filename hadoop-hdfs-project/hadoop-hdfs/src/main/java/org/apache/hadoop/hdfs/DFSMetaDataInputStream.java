@@ -105,13 +105,16 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 		LocatedBlocks blockLocations = 
 			dfsClient.getLocatedBlocks(src, pos, len);
 
+		DFSClient.LOG.info("[compose] DFSMetaDataInputStream read() returned " + 
+			blockLocations.locatedBlockCount() + " blocks");
+
 		MetaDataInputProto.Builder mdiBld = MetaDataInputProto.newBuilder();
 
 		for (LocatedBlock lb : blockLocations.getLocatedBlocks()) {
 			MetaDataInputProto.LocatedBlockProto.Builder lbBld 
 				= MetaDataInputProto.LocatedBlockProto.newBuilder();
 			lbBld.setStartOffset(pos);
-			DFSClient.LOG.info("[compose] block offset: " + lb.getStartOffset() + ", location: ");
+			DFSClient.LOG.info("[compose] In DFSMetaDataInputStream, block offset: " + lb.getStartOffset() + ", location: ");
 			for (DatanodeInfo di : lb.getLocations()) {
 				MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.Builder diBld 
 					= MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.newBuilder();

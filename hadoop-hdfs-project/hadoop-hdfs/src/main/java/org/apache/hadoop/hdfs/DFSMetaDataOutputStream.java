@@ -157,8 +157,12 @@ implements Syncable, CanSetDropBehind {
 			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
 				favoredNodes[counter++] = diProto.getIpAddr() + ":" + diProto.getXferPort();
 			}
-			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
-				block, null, fileId, favoredNodes);
+			try {
+				LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
+					block, null, fileId, favoredNodes);
+			} catch (Exception e) {
+				DFSClient.LOG.info("[compose] Cannot addBlock");
+			}
 			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream block starting offset: " + lbProto.getStartOffset() + 
 				", returned block ID: " + lb.getBlock().getBlockId() + " at pool " + 
 				lb.getBlock().getBlockPoolId());

@@ -157,14 +157,17 @@ implements Syncable, CanSetDropBehind {
 			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
 				block, null, fileId, favoredNodes);
 			block = lb.getBlock();
-			s = createSocketForPipeline(nodes[0], nodes.length, dfsClient);
-			OutputStream unbufOut = NetUtils.getOutputStream(s, writeTimeout);
-			DataOutputStream out = new DataOutputStream(new BufferedOutputStream(unbufOut,
-				HdfsConstants.SMALL_BUFFER_SIZE));
-			new Sender(out).touchBlock(block, accessToken, dfsClient.clientName,
-			    nodes, null, null, recoveryFlag? stage.getRecoveryStage() : stage, 
-			    nodes.length, block.getNumBytes(), bytesSent, newGS, checksum,
-			    cachingStrategy.get());
+			for (String dnAddr : favoredNodes) {
+				DatanodeInfo chosenNode = new DatanodeInfo(new DatanodeID(dnAddr));
+				s = createSocketForPipeline(chosenNode, 1, dfsClient);
+				OutputStream unbufOut = NetUtils.getOutputStream(s, writeTimeout);
+				DataOutputStream out = new DataOutputStream(new BufferedOutputStream(unbufOut,
+					HdfsConstants.SMALL_BUFFER_SIZE));
+				new Sender(out).touchBlock(block, accessToken, dfsClient.clientName,
+					nodes, null, null, recoveryFlag? stage.getRecoveryStage() : stage, 
+					nodes.length, block.getNumBytes(), bytesSent, newGS, checksum,
+					cachingStrategy.get());
+			}
 
 			DFSClient.LOG.info("[compose]  block starting offset: " + lbProto.getStartOffset() + 
 				", returned block ID: " + lb.getBlock().getBlockId() + " at pool " + 

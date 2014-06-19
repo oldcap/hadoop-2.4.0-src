@@ -171,10 +171,10 @@ implements Syncable, CanSetDropBehind {
 				OutputStream unbufOut = NetUtils.getOutputStream(s, writeTimeout);
 				DataOutputStream out = new DataOutputStream(new BufferedOutputStream(unbufOut,
 					HdfsConstants.SMALL_BUFFER_SIZE));
-				new Sender(out).touchBlock(block, accessToken, dfsClient.clientName,
-					nodes, null, null, recoveryFlag? stage.getRecoveryStage() : stage, 
-					nodes.length, block.getNumBytes(), bytesSent, newGS, checksum,
-					cachingStrategy.get());
+				DatanodeInfo[] targets = {chosenNode};
+				new Sender(out).touchBlock(block, lb.getBlockToken(), dfsClient.clientName,
+					targets, null, null, null, 
+					1, 0, 0, 0, null, null);
 			}
 
 			DFSClient.LOG.info("[compose]  block starting offset: " + lbProto.getStartOffset() + 

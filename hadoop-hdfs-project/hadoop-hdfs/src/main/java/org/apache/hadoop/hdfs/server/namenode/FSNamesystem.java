@@ -3072,6 +3072,8 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
    * all blocks, otherwise check only penultimate block.
    */
   boolean checkFileProgress(INodeFile v, boolean checkall) {
+  	// TOFIX: hardcode
+  	return true;
     readLock();
     try {
       if (checkall) {

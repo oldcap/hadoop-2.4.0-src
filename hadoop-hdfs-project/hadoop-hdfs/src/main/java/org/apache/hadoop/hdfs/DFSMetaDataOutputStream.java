@@ -152,14 +152,13 @@ implements Syncable, CanSetDropBehind {
 		for (MetaDataInputProto.LocatedBlockProto lbProto : mdiProto.getLbList()) {
 			String[] favoredNodes = new String[lbProto.getDiList().size()];
 			int counter = 0;
-			MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto;
-			for (diProto : lbProto.getDiList()) {
+			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
 				favoredNodes[counter++] = diProto.getIpAddr() + ":" + diProto.getXferPort();
 			}
 			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
 				block, null, fileId, favoredNodes);
 			block = lb.getBlock();
-			for (diProto : lbProto.getDiList()) {
+			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
 				DatanodeInfo chosenNode = new DatanodeInfo(
 											new DatanodeID(diProto.getIpAddr(),
 												diProto.getHostName(),

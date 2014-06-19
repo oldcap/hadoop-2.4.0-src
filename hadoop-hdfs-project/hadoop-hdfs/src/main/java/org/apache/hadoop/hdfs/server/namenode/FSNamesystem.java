@@ -2820,9 +2820,10 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
     }
 
     // Check if the penultimate block is minimally replicated
-    if (!checkFileProgress(pendingFile, false)) {
-      throw new NotReplicatedYetException("Not replicated yet: " + src);
-    }
+    // TODO: hardcode, remove later
+    // if (!checkFileProgress(pendingFile, false)) {
+    //   throw new NotReplicatedYetException("Not replicated yet: " + src);
+    // }
     return iip;
   }
 
@@ -3072,8 +3073,6 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
    * all blocks, otherwise check only penultimate block.
    */
   boolean checkFileProgress(INodeFile v, boolean checkall) {
-  	// TOFIX: hardcode
-  	return true;
     readLock();
     try {
       if (checkall) {

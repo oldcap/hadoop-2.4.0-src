@@ -164,13 +164,6 @@ public class Sender implements DataTransferProtocol {
       final CachingStrategy cachingStrategy) throws IOException {
     ClientOperationHeaderProto header = DataTransferProtoUtil.buildClientHeader(
         blk, clientName, blockToken);
-    
-    ChecksumProto checksumProto;
-    if (requestedChecksum != null) {
-      DataTransferProtoUtil.toProto(requestedChecksum);
-    } else {
-      checksumProto = new ChecksumProto();
-    }
 
     OpTouchBlockProto.Builder proto = OpTouchBlockProto.newBuilder()
       .setHeader(header)
@@ -180,8 +173,6 @@ public class Sender implements DataTransferProtocol {
       .setMinBytesRcvd(minBytesRcvd)
       .setMaxBytesRcvd(maxBytesRcvd)
       .setLatestGenerationStamp(latestGenerationStamp)
-      .setRequestedChecksum(checksumProto)
-      .setCachingStrategy(getCachingStrategy(cachingStrategy))
       .setLocalFileName(localFileName);
     
     if (source != null) {

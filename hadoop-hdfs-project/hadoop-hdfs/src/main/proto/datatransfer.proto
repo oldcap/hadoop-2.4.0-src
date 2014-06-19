@@ -141,7 +141,7 @@ message OpTouchBlockProto {
   /**
    * The requested checksum mechanism for this block write.
    */
-  required ChecksumProto requestedChecksum = 9;
+  optional ChecksumProto requestedChecksum = 9;
   optional CachingStrategyProto cachingStrategy = 10;
   required string localFileName = 11;
 }

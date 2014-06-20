@@ -180,7 +180,7 @@ implements Syncable, CanSetDropBehind {
 				DatanodeInfo[] targets = {chosenNode};
 				DFSClient.LOG.info("[compose] Connecting to DN " + chosenNode);
 				new Sender(out).touchBlock(block, lb.getBlockToken(), dfsClient.clientName,
-					targets, null, "localfilename", null, 
+					targets, null, "/root/install.log", null, 
 					1, 0, 0, 0, null, null);
 			}
 		}

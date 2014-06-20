@@ -138,7 +138,8 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 			}
 			lbBld.setLocalFileName("/tmp/hadoop-root/dfs/data/current/" + 
 				lb.getBlock().getBlockPoolId() + 
-				"/" + lb.getBlock().getBlockName());
+				"/current/finalized/" + 
+				lb.getBlock().getBlockName());
 			mdiBld.addLb(lbBld.build());
 		}
 

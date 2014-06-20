@@ -966,7 +966,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
    * Complete the block write!
    */
   @Override // FsDatasetSpi
-  public synchronized ReplicaInfo finalizeTouchedBlock(ExtendedBlock b,
+  public synchronized void finalizeTouchedBlock(ExtendedBlock b,
     String localFileName) throws IOException {
     if (Thread.interrupted()) {
       // Don't allow data modifications from interrupted threads
@@ -976,8 +976,8 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
     File f = v.createTouchedFile(b.getBlockPoolId(), b.getLocalBlock(), localFileName);
     FinalizedReplica newReplicaInfo = 
       new FinalizedReplica(b.getLocalBlock(), v, f.getParentFile());
-    volumeMap.add(b.getBlockPoolId(), b.getBlockId());
-    return newReplicaInfo;
+    volumeMap.add(b.getBlockPoolId(), newReplicaInfo);
+    datanode.closeBlock(b, DataNode.EMPTY_DEL_HINT, v.getStorageID());
   }
   /**
    * Remove the temporary block file (if any)

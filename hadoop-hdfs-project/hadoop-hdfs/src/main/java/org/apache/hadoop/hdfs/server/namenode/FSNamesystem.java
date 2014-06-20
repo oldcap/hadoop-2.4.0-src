@@ -2820,10 +2820,9 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
     }
 
     // Check if the penultimate block is minimally replicated
-    // TODO: hardcode, remove later
-    // if (!checkFileProgress(pendingFile, false)) {
-    //   throw new NotReplicatedYetException("Not replicated yet: " + src);
-    // }
+    if (!checkFileProgress(pendingFile, false)) {
+      throw new NotReplicatedYetException("Not replicated yet: " + src);
+    }
     return iip;
   }
 

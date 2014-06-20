@@ -809,7 +809,7 @@ class DataXceiver extends Receiver implements Runnable {
     writeResponse(SUCCESS, null, replyOut);
     IOUtils.closeStream(replyOut);
 
-    datanode.closeBlock(block, DataNode.EMPTY_DEL_HINT, storageUuid);
+    // datanode.closeBlock(block, DataNode.EMPTY_DEL_HINT, storageUuid);
   }
 
   @Override

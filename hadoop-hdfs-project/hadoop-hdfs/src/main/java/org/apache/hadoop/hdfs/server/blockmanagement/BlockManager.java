@@ -1942,6 +1942,8 @@ public class BlockManager {
       final Collection<BlockToMarkCorrupt> toCorrupt,
       final Collection<StatefulBlockInfo> toUC) {
     
+    LOG.info("[compose] BlockManager processReportedBlock " 
+      + block.getBlockId());
     if(LOG.isDebugEnabled()) {
       LOG.debug("Reported block " + block
           + " on " + dn + " size " + block.getNumBytes()
@@ -2794,6 +2796,7 @@ public class BlockManager {
     // Decrement number of blocks scheduled to this datanode.
     // for a retry request (of DatanodeProtocol#blockReceivedAndDeleted with 
     // RECEIVED_BLOCK), we currently also decrease the approximate number. 
+    LOG.info("[compose] BlockManager addBlock " + block.getBlockId());
     node.decrementBlocksScheduled();
 
     // get the deletion hint node

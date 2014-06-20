@@ -805,10 +805,11 @@ class DataXceiver extends Receiver implements Runnable {
       new BufferedOutputStream(
         getOutputStream(),
         HdfsConstants.SMALL_BUFFER_SIZE));
-    ReplicaInfo repl = 
+    String storageUuid = 
       datanode.data.finalizeTouchedBlock(block, localFileName);
     writeResponse(SUCCESS, null, replyOut);
     IOUtils.closeStream(replyOut);
+    datanode.closeBlock(block, DataNode.EMPTY_DEL_HINT, storageUuid);
   }
 
   @Override

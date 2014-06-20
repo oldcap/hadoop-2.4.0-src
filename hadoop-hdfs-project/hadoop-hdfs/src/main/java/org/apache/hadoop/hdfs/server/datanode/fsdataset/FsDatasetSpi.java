@@ -266,7 +266,7 @@ public interface FsDatasetSpi<V extends FsVolumeSpi> extends FSDatasetMBean {
    * @param b
    * @throws IOException
    */
-  public void finalizeTouchedBlock(ExtendedBlock b, 
+  public String finalizeTouchedBlock(ExtendedBlock b, 
     String localFileName) throws IOException;
 
   /**

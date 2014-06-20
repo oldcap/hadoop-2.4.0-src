@@ -252,6 +252,7 @@ class BlockPoolSlice {
     FsDatasetImpl.LOG.info("[compose] createTouchedFile " + 
       finalizedDir.dir + "/" + b.getBlockName());
     File f = new File(finalizedDir.dir, b.getBlockName());
+    f.createNewFile();
     return f;
   }
 

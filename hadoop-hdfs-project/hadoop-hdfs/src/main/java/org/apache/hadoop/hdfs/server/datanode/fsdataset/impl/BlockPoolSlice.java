@@ -249,6 +249,8 @@ class BlockPoolSlice {
    * the block is finalized.
    */
   File createTouchedFile(Block b) throws IOException {
+    FsDatasetImpl.LOG.info("[compose] createTouchedFile " + 
+      finalizedDir.dir + "/" + b.getBlockName());
     File f = new File(finalizedDir.dir, b.getBlockName());
     return f;
   }

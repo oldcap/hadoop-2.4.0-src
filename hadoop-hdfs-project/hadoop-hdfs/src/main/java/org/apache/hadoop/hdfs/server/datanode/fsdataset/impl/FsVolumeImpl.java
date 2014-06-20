@@ -201,7 +201,7 @@ class FsVolumeImpl implements FsVolumeSpi {
    */
   File createTouchedFile(String bpid, Block b, 
     String localFileName) throws IOException {
-    return getBlockPoolSlice(bpid).createTouchedFile(b);
+    return getBlockPoolSlice(bpid).createTouchedFile(b, localFileName);
   }
 
   File addBlock(String bpid, Block b, File f) throws IOException {

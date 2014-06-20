@@ -5398,7 +5398,7 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
       throws IOException {
 
     LOG.info("[compose] NameSystem processIncrementalBlockReport " 
-    	+ srdb.getBlocks()[0].getStatus())
+    	+ srdb.getBlocks()[0].getStatus());
     writeLock();
     try {
       blockManager.processIncrementalBlockReport(nodeID, srdb);

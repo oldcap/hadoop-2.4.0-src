@@ -972,6 +972,14 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
       // Don't allow data modifications from interrupted threads
       throw new IOException("Cannot finalize block from Interrupted Thread");
     }
+    File localFile = new File(localFileName);
+    long fileLength = -1;
+    if (localFile.exists()) {
+      fileLength = localFile.length();
+    } else {
+      DataNode.LOG.error("[compose] Local file doesn't exist!");
+    }
+    b.setNumBytes(fileLength);
     FsVolumeImpl v = volumes.getNextVolume(b.getNumBytes());
     File f = v.createTouchedFile(b.getBlockPoolId(), b.getLocalBlock(), localFileName);
     FinalizedReplica newReplicaInfo = 

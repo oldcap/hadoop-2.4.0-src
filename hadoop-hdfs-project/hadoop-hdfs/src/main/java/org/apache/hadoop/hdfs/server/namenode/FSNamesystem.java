@@ -5396,6 +5396,9 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
   public void processIncrementalBlockReport(final DatanodeID nodeID,
       final String poolId, final StorageReceivedDeletedBlocks srdb)
       throws IOException {
+
+    LOG.info("[compose] NameSystem processIncrementalBlockReport " 
+    	+ srdb.getBlocks()[0].getStatus())
     writeLock();
     try {
       blockManager.processIncrementalBlockReport(nodeID, srdb);

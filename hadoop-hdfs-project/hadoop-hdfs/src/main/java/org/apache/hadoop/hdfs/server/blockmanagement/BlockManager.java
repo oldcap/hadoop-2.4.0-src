@@ -1959,12 +1959,15 @@ public class BlockManager {
     
     // find block by blockId
     BlockInfo storedBlock = blocksMap.getStoredBlock(block);
+
     if(storedBlock == null) {
       // If blocksMap does not contain reported block id,
       // the replica should be removed from the data-node.
       toInvalidate.add(new Block(block));
       return null;
     }
+    LOG.info("[compose] BlockManager processReportedBlock, blocksMap returns " 
+      + storedBlock.getBlockId());
     BlockUCState ucState = storedBlock.getBlockUCState();
     
     // Block is on the NN

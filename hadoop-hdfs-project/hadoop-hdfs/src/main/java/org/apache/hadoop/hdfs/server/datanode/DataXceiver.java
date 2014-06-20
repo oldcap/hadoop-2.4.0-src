@@ -762,7 +762,8 @@ class DataXceiver extends Receiver implements Runnable {
           stage == BlockConstructionStage.PIPELINE_CLOSE_RECOVERY) {
         datanode.closeBlock(block, DataNode.EMPTY_DEL_HINT, storageUuid);
         LOG.info("Received " + block + " src: " + remoteAddress + " dest: "
-            + localAddress + " of size " + block.getNumBytes());
+            + localAddress + " of size " + block.getNumBytes()
+            + " and UUID " + storageUuid);
       }
 
       
@@ -797,7 +798,8 @@ class DataXceiver extends Receiver implements Runnable {
     final long latestGenerationStamp,
     DataChecksum requestedChecksum,
     CachingStrategy cachingStrategy) throws IOException {
-    LOG.info("[compose] Receiving touch block request");
+    LOG.info("[compose] Receiving touch block request, block size: " + 
+      block.getNumBytes());
     // reply to upstream datanode or client 
     final DataOutputStream replyOut = new DataOutputStream(
       new BufferedOutputStream(
@@ -805,6 +807,9 @@ class DataXceiver extends Receiver implements Runnable {
         HdfsConstants.SMALL_BUFFER_SIZE));
     datanode.data.finalizeTouchedBlock(block, localFileName);
     writeResponse(SUCCESS, null, replyOut);
+    IOUtils.closeStream(replyOut);
+
+    datanode.closeBlock(block, DataNode.EMPTY_DEL_HINT, storageUuid);
   }
 
   @Override

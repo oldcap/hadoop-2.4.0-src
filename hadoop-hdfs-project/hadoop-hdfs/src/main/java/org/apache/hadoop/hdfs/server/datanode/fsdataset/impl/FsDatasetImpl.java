@@ -973,7 +973,7 @@ class FsDatasetImpl implements FsDatasetSpi<FsVolumeImpl> {
       throw new IOException("Cannot finalize block from Interrupted Thread");
     }
     FsVolumeImpl v = volumes.getNextVolume(b.getNumBytes());
-    File f = v.createTouchedFile(b.getBlockPoolId(), b.getLocalBlock());
+    File f = v.createTouchedFile(b.getBlockPoolId(), b.getLocalBlock(), localFileName);
   }
   /**
    * Remove the temporary block file (if any)

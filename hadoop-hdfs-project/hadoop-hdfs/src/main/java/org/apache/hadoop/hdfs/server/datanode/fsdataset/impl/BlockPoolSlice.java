@@ -27,6 +27,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.RandomAccessFile;
 import java.util.Scanner;
+import java.nio.file.Files;
+import java.nio.file.FileSystems;
+import java.nio.file.Paths;
+import java.nio.file.Path;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.DU;
@@ -248,11 +252,13 @@ class BlockPoolSlice {
    * Touched files. They get moved to the finalized block directory when
    * the block is finalized.
    */
-  File createTouchedFile(Block b) throws IOException {
+  File createTouchedFile(Block b, String localFileName) throws IOException {
     FsDatasetImpl.LOG.info("[compose] createTouchedFile " + 
       finalizedDir.dir + "/" + b.getBlockName());
+    Path blockFilePath = Paths.get(finalizedDir.dir + "/" + b.getBlockName());
     File f = new File(finalizedDir.dir, b.getBlockName());
     f.createNewFile();
+    Files.createSymbolicLink(blockFilePath, Paths.get(localFileName));
     return f;
   }
 

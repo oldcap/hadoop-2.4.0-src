@@ -154,6 +154,7 @@ implements Syncable, CanSetDropBehind {
 			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream received LocatedBlock " + lbProto.getStartOffset() + 
 				", " + favoredNodes.length + " nodes.");
 			int counter = 0;
+			String localFileName = lbProto.getLocalFileName();
 			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
 				favoredNodes[counter++] = diProto.getIpAddr() + ":" + diProto.getXferPort();
 			}
@@ -180,7 +181,7 @@ implements Syncable, CanSetDropBehind {
 				DatanodeInfo[] targets = {chosenNode};
 				DFSClient.LOG.info("[compose] Connecting to DN " + chosenNode);
 				new Sender(out).touchBlock(block, lb.getBlockToken(), dfsClient.clientName,
-					targets, null, "/root/install.log", null, 
+					targets, null, localFileName, null, 
 					1, 0, 0, 0, null, null);
 			}
 		}

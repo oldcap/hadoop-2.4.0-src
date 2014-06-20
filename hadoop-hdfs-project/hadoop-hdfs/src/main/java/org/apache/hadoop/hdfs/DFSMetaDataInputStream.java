@@ -117,7 +117,7 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 			lbBld.setStartOffset(pos);
 			DFSClient.LOG.info("[compose] In DFSMetaDataInputStream, block offset: " + 
 				lb.getStartOffset() + ", block path is " + 
-				lb.getBlock().getBlockPoolId() + "/" + lb.getBlock().getBlockId() +
+				lb.getBlock().getBlockPoolId() + "/" + lb.getBlock().getBlockName() +
 				", location: ");
 			for (DatanodeInfo di : lb.getLocations()) {
 				MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto.Builder diBld 
@@ -132,11 +132,12 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 				diBld.setInfoSecurePort(di.getInfoSecurePort());
 				diBld.setIpcPort(di.getIpcPort());
 				diBld.setDatanodeUuid(di.getDatanodeUuid());
-
 				
 				DFSClient.LOG.info("  [compose] location: " + di);
 				lbBld.addDi(diBld.build());
 			}
+			lbBld.setLocalFileName(lb.getBlock().getBlockPoolId() + 
+				"/" + lb.getBlock().getBlockName());
 			mdiBld.addLb(lbBld.build());
 		}
 

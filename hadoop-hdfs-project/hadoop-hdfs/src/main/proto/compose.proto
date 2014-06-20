@@ -39,7 +39,8 @@ message MetaDataInputProto {
 			optional string datanodeUuid = 8;
 		}
 		required int64 startOffset = 1;
-		repeated DatanodeInfoProto di = 2;	
+		required string localFileName = 2;
+		repeated DatanodeInfoProto di = 3;
 	}
 	repeated LocatedBlockProto lb = 1;
 }

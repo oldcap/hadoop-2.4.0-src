@@ -257,7 +257,7 @@ class BlockPoolSlice {
       finalizedDir.dir + "/" + b.getBlockName());
     Path blockFilePath = Paths.get(finalizedDir.dir + "/" + b.getBlockName());
     File f = new File(finalizedDir.dir, b.getBlockName());
-    f.createNewFile();
+    // f.createNewFile();
     Files.createSymbolicLink(blockFilePath, Paths.get(localFileName));
     return f;
   }

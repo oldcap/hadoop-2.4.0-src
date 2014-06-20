@@ -765,7 +765,7 @@ class DataXceiver extends Receiver implements Runnable {
             + localAddress + " of size " + block.getNumBytes()
             + " and UUID " + storageUuid);
       }
-
+      LOG.info("[compose] DataXceiver writeBlock, block UUID is " + storageUuid);
       
     } catch (IOException ioe) {
       LOG.info("opWriteBlock " + block + " received exception " + ioe);

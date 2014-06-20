@@ -1698,6 +1698,7 @@ public class DataNode extends Configured
    * @param delHint
    */
   void closeBlock(ExtendedBlock block, String delHint, String storageUuid) {
+    LOG.info("[compose] DataNode closing block with UUID " + storageUuid);
     metrics.incrBlocksWritten();
     BPOfferService bpos = blockPoolManager.get(block.getBlockPoolId());
     if(bpos != null) {

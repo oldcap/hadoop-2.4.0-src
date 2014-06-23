@@ -2898,7 +2898,7 @@ public class BlockManager {
 
     for (ReceivedDeletedBlockInfo rdbi : srdb.getBlocks()) {
       LOG.info("[compose] BlockManager processIncrementalBlockReport, "
-        + rdbi.getStatus();
+        + rdbi.getStatus());
       switch (rdbi.getStatus()) {
       case DELETED_BLOCK:
         removeStoredBlock(rdbi.getBlock(), node);

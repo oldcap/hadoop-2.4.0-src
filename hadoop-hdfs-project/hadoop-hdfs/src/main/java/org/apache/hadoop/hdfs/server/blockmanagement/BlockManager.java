@@ -1804,6 +1804,8 @@ public class BlockManager {
   private void processFirstBlockReport(final DatanodeDescriptor node,
       final String storageID,
       final BlockListAsLongs report) throws IOException {
+    LOG.info("[compose] BlockManager processFirstBlockReport "
+      + node);
     if (report == null) return;
     assert (namesystem.hasWriteLock());
     assert (node.getStorageInfo(storageID).numBlocks() == 0);
@@ -1811,6 +1813,7 @@ public class BlockManager {
 
     while(itBR.hasNext()) {
       Block iblk = itBR.next();
+      LOG.info("[compose]   block " + iblk);
       ReplicaState reportedState = itBR.getCurrentReplicaState();
       
       if (shouldPostponeBlocksFromFuture &&

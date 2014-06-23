@@ -202,10 +202,8 @@ implements Syncable, CanSetDropBehind {
 	 */
 	@Override
 	public synchronized void close() throws IOException {
-		try {}
 		ExtendedBlock lastBlock = block;
 		completeFile(lastBlock);
 		dfsClient.endFileLease(src);
-	} catch (ClosedChannelException e) {
 	}
 }

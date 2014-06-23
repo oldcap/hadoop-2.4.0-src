@@ -1043,7 +1043,11 @@ class NameNodeRpcServer implements NamenodeProtocols {
   @Override // DatanodeProtocol
   public void blockReceivedAndDeleted(DatanodeRegistration nodeReg, String poolId,
       StorageReceivedDeletedBlocks[] receivedAndDeletedBlocks) throws IOException {
-    LOG.info("[compose] NameNode receiving block from poolId " + poolId);
+    LOG.info("[compose] NameNode receiving " + receivedAndDeletedBlocks.length
+      + " blocks from poolId " + poolId);
+    if (receivedAndDeletedBlocks.length > 0) {
+      LOG.info("  [compose] first block is " + receivedAndDeletedBlocks[0]);
+    }
     verifyRequest(nodeReg);
     metrics.incrBlockReceivedAndDeletedOps();
     if(blockStateChangeLog.isDebugEnabled()) {

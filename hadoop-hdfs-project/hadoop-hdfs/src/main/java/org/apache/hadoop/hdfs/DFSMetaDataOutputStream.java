@@ -149,9 +149,6 @@ implements Syncable, CanSetDropBehind {
 			b.length);
 		MetaDataInputProto mdiProto = MetaDataInputProto.parseFrom(b);
 
-		LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
-						block, null, fileId, favoredNodes);;
-
 		for (MetaDataInputProto.LocatedBlockProto lbProto : mdiProto.getLbList()) {
 			String[] favoredNodes = new String[lbProto.getDiList().size()];
 			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream received LocatedBlock " + lbProto.getStartOffset() + 
@@ -164,22 +161,25 @@ implements Syncable, CanSetDropBehind {
 			if (block != null) {
 				block.setNumBytes(67108864);
 			}
-			
+			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
+				block, null, fileId, favoredNodes);
 			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream block starting offset: " + lbProto.getStartOffset() + 
 				", returned block ID: " + lb.getBlock().getBlockId() + " at pool " + 
 				lb.getBlock().getBlockPoolId());
-			
+			block = lb.getBlock();
 			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
 				DatanodeInfo chosenNode = new DatanodeInfo(
-											new DatanodeID(diProto.getIpAddr(),
-												diProto.getHostName(),
-												diProto.getDatanodeUuid(),
-												diProto.getXferPort(),
-												diProto.getInfoPort(),
-												diProto.getInfoSecurePort(),
-												diProto.getIpcPort()));
+					new DatanodeID(diProto.getIpAddr(),
+						diProto.getHostName(),
+						diProto.getDatanodeUuid(),
+						diProto.getXferPort(),
+						diProto.getInfoPort(),
+						diProto.getInfoSecurePort(),
+						diProto.getIpcPort()));
 				s = createSocketForPipeline(chosenNode, 1, dfsClient);
 				long writeTimeout = dfsClient.getDatanodeWriteTimeout(1);
+				InputStream unbufIn = NetUtils.getInputStream(s);
+				DataInputStream blockReplyStream = new DataInputStream(unbufIn);
 				OutputStream unbufOut = NetUtils.getOutputStream(s, writeTimeout);
 				DataOutputStream out = new DataOutputStream(new BufferedOutputStream(unbufOut,
 					HdfsConstants.SMALL_BUFFER_SIZE));
@@ -188,11 +188,10 @@ implements Syncable, CanSetDropBehind {
 				new Sender(out).touchBlock(block, lb.getBlockToken(), dfsClient.clientName,
 					targets, null, localFileName, null, 
 					1, 0, 0, 0, null, null);
-			}
+				BlockOpResponseProto resp = BlockOpResponseProto.parseFrom(
+					PBHelper.vintPrefixed(blockReplyStream));
 
-			lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
-						block, null, fileId, favoredNodes);
-			block = lb.getBlock();
+			}
 		}
 		// MetaDataInputProto.LocatedBlockProto lb = 
 	}

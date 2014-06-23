@@ -591,6 +591,7 @@ public class BlockManager {
     if(commitBlock == null)
       return false; // not committing, this is a block allocation retry
     BlockInfo lastBlock = bc.getLastBlock();
+    LOG.info("[compose] commitOrCompleteLastBlock, " + lastBlock);
     if(lastBlock == null)
       return false; // no blocks in file yet
     if(lastBlock.isComplete())
@@ -2200,6 +2201,8 @@ public class BlockManager {
   private void addStoredBlockImmediate(BlockInfo storedBlock,
       DatanodeDescriptor node, String storageID)
   throws IOException {
+    LOG.info("[compose] addStoredBlockImmediate " + storedBlock 
+      + ", " + node);
     assert (storedBlock != null && namesystem.hasWriteLock());
     if (!namesystem.isInStartupSafeMode() 
         || namesystem.isPopulatingReplQueues()) {

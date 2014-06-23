@@ -203,7 +203,7 @@ implements Syncable, CanSetDropBehind {
 	@Override
 	public synchronized void close() throws IOException {
 		ExtendedBlock lastBlock = block;
-		completeFile(lastBlock);
+		dfsClient.namenode.complete(src, dfsClient.clientName, lastBlock, fileId);
 		dfsClient.endFileLease(src);
 	}
 }

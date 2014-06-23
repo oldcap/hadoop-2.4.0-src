@@ -614,6 +614,7 @@ public class BlockManager {
     if(blkIndex < 0)
       return null;
     BlockInfo curBlock = bc.getBlocks()[blkIndex];
+    LOG.info("[compose] completeBlock, " + curBlock);
     if(curBlock.isComplete())
       return curBlock;
     BlockInfoUnderConstruction ucBlock = (BlockInfoUnderConstruction)curBlock;

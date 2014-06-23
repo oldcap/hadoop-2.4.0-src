@@ -2282,6 +2282,9 @@ public class BlockManager {
     int numCurrentReplica = numLiveReplicas
       + pendingReplications.getNumReplicas(storedBlock);
 
+    LOG.info("[compose] BlockUCState is " + storedBlock.getBlockUCState()
+      + ", numLiveReplicas is " + numLiveReplicas);    
+
     if(storedBlock.getBlockUCState() == BlockUCState.COMMITTED &&
         numLiveReplicas >= minReplication) {
       storedBlock = completeBlock(bc, storedBlock, false);

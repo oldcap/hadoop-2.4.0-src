@@ -149,6 +149,9 @@ implements Syncable, CanSetDropBehind {
 			b.length);
 		MetaDataInputProto mdiProto = MetaDataInputProto.parseFrom(b);
 
+		LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
+						block, null, fileId, favoredNodes);;
+
 		for (MetaDataInputProto.LocatedBlockProto lbProto : mdiProto.getLbList()) {
 			String[] favoredNodes = new String[lbProto.getDiList().size()];
 			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream received LocatedBlock " + lbProto.getStartOffset() + 
@@ -161,12 +164,11 @@ implements Syncable, CanSetDropBehind {
 			if (block != null) {
 				block.setNumBytes(67108864);
 			}
-			LocatedBlock lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
-				block, null, fileId, favoredNodes);
+			
 			DFSClient.LOG.info("[compose] DFSMetaDataOutputStream block starting offset: " + lbProto.getStartOffset() + 
 				", returned block ID: " + lb.getBlock().getBlockId() + " at pool " + 
 				lb.getBlock().getBlockPoolId());
-			block = lb.getBlock();
+			
 			for (MetaDataInputProto.LocatedBlockProto.DatanodeInfoProto diProto : lbProto.getDiList()) {
 				DatanodeInfo chosenNode = new DatanodeInfo(
 											new DatanodeID(diProto.getIpAddr(),
@@ -187,6 +189,10 @@ implements Syncable, CanSetDropBehind {
 					targets, null, localFileName, null, 
 					1, 0, 0, 0, null, null);
 			}
+
+			lb = dfsClient.namenode.addBlock(src, dfsClient.clientName,
+						block, null, fileId, favoredNodes);
+			block = lb.getBlock();
 		}
 		// MetaDataInputProto.LocatedBlockProto lb = 
 	}

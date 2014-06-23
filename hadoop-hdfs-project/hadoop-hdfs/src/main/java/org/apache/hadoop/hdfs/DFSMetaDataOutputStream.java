@@ -202,37 +202,10 @@ implements Syncable, CanSetDropBehind {
 	 */
 	@Override
 	public synchronized void close() throws IOException {
-		if (closed) {
-			IOException e = lastException.getAndSet(null);
-			if (e == null)
-				return;
-			else
-				throw e;
-		}
-
-		try {
-	    flushBuffer();       // flush from all upper layers
-
-	    if (currentPacket != null) { 
-	    	waitAndQueueCurrentPacket();
-	    }
-
-	    if (bytesCurBlock != 0) {
-	      // send an empty packet to mark the end of the block
-	    	currentPacket = new Packet(0, 0, bytesCurBlock);
-	    	currentPacket.lastPacketInBlock = true;
-	    	currentPacket.syncBlock = shouldSyncBlock;
-	    }
-
-	    flushInternal();             // flush all data to Datanodes
-	    // get last block before destroying the streamer
-	    ExtendedBlock lastBlock = block;
-	    closeThreads(false);
-	    completeFile(lastBlock);
-	    dfsClient.endFileLease(src);
+		try {}
+		ExtendedBlock lastBlock = block;
+		completeFile(lastBlock);
+		dfsClient.endFileLease(src);
 	} catch (ClosedChannelException e) {
-	} finally {
-		closed = true;
 	}
-}
 }

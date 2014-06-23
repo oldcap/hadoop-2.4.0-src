@@ -2283,7 +2283,7 @@ public class BlockManager {
     int numCurrentReplica = numLiveReplicas
       + pendingReplications.getNumReplicas(storedBlock);
 
-    LOG.info("[compose] addStoredBlock" + block.getblockid()
+    LOG.info("[compose] addStoredBlock" + block.getblockId()
       + ", BlockUCState is " + storedBlock.getBlockUCState()
       + ", numLiveReplicas is " + numLiveReplicas);    
 

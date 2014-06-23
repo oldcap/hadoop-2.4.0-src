@@ -2643,7 +2643,14 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
       QuotaExceededException, SafeModeException, UnresolvedLinkException,
       IOException {
 
-    LOG.info("[compose] NameSystem getAdditionalBlock " + src);
+    String prevBlk;
+    if (previous == null) {
+    	prevBlk = "null";
+    } else {
+    	prevBlk = previous.toString();
+    }
+    LOG.info("[compose] NameSystem getAdditionalBlock " + src
+    	+ ", previous block is " + previous);
     long blockSize;
     int replication;
     DatanodeDescriptor clientNode = null;

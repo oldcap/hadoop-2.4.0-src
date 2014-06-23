@@ -2642,6 +2642,8 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
       throws LeaseExpiredException, NotReplicatedYetException,
       QuotaExceededException, SafeModeException, UnresolvedLinkException,
       IOException {
+
+    LOG.info("[compose] NameSystem getAdditionalBlock " + src);
     long blockSize;
     int replication;
     DatanodeDescriptor clientNode = null;
@@ -2991,6 +2993,7 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
   private boolean completeFileInternal(String src, 
       String holder, Block last, long fileId) throws SafeModeException,
       UnresolvedLinkException, IOException {
+    LOG.info("[compose] completeFileInternal " + src + ", " + last);
     assert hasWriteLock();
     final INodesInPath iip = dir.getLastINodeInPath(src);
     final INodeFile pendingFile;

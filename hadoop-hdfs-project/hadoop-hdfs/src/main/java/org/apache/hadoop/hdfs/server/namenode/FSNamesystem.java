@@ -4072,6 +4072,7 @@ public class FSNamesystem implements Namesystem, FSClusterStats,
   @VisibleForTesting
   String closeFileCommitBlocks(INodeFile pendingFile, BlockInfo storedBlock)
       throws IOException {
+    LOG.info("[compose] FSNamesystem closeFileCommitBlocks " + storedBlock);
     String src = pendingFile.getFullPathName();
 
     // commit the last block and complete it if it has minimum replicas

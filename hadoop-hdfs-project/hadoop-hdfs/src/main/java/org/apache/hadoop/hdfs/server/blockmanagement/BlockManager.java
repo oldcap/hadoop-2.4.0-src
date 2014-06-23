@@ -2283,7 +2283,7 @@ public class BlockManager {
     int numCurrentReplica = numLiveReplicas
       + pendingReplications.getNumReplicas(storedBlock);
 
-    LOG.info("[compose] addStoredBlock" + block
+    LOG.info("[compose] addStoredBlock" + block.getblockid()
       + ", BlockUCState is " + storedBlock.getBlockUCState()
       + ", numLiveReplicas is " + numLiveReplicas);    
 
@@ -2897,6 +2897,8 @@ public class BlockManager {
     }
 
     for (ReceivedDeletedBlockInfo rdbi : srdb.getBlocks()) {
+      LOG.info("[compose] BlockManager processIncrementalBlockReport, "
+        + rdbi.getStatus();
       switch (rdbi.getStatus()) {
       case DELETED_BLOCK:
         removeStoredBlock(rdbi.getBlock(), node);

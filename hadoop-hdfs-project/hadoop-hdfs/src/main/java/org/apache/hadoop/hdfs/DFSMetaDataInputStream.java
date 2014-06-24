@@ -140,7 +140,7 @@ public class DFSMetaDataInputStream extends DFSInputStream {
 				lb.getBlock().getBlockPoolId() + 
 				"/current/finalized/" + 
 				lb.getBlock().getBlockName());
-			lbBld.setNumBytes(lb.getBlock.getNumBytes());
+			lbBld.setNumBytes(lb.getBlock().getNumBytes());
 			mdiBld.addLb(lbBld.build());
 		}
 

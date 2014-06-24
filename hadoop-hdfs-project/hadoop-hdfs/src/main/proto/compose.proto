@@ -40,7 +40,8 @@ message MetaDataInputProto {
 		}
 		required int64 startOffset = 1;
 		required string localFileName = 2;
-		repeated DatanodeInfoProto di = 3;
+		required int64 numBytes = 3;
+		repeated DatanodeInfoProto di = 4;
 	}
 	repeated LocatedBlockProto lb = 1;
 }

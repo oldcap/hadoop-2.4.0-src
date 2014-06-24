@@ -190,8 +190,8 @@ implements Syncable, CanSetDropBehind {
 					1, 0, 0, 0, null, null);
 				BlockOpResponseProto resp = BlockOpResponseProto.parseFrom(
 					PBHelper.vintPrefixed(blockReplyStream));
-
 			}
+			block.setNumBytes(lbProto.getNumBytes());
 		}
 		// MetaDataInputProto.LocatedBlockProto lb = 
 	}

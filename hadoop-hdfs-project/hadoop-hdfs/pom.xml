@@ -183,6 +183,7 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <dependency>
       <groupId>org.apache.kafka</groupId>
       <artifactId>kafka_2.8.2</artifactId>
+      <version>0.8.1</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

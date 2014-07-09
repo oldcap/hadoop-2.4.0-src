@@ -288,7 +288,6 @@ public class DistributedFileSystem extends FileSystem {
     }.resolve(this, absF);
   }
 
-  @Override
   public FSDataInputStream open(Path f, final int bufferSize, final boolean compose)
   throws IOException {
     LOG.info("[compose] DistributedFilesystem open with compose flag: " + f);
@@ -360,7 +359,6 @@ public class DistributedFileSystem extends FileSystem {
         blockSize, progress, null);
   }
 
-  @Override
   public FSDataOutputStream create(Path f, FsPermission permission,
       boolean overwrite, int bufferSize, short replication, long blockSize,
       Progressable progress, boolean compose) throws IOException {

@@ -1115,5 +1115,10 @@ public class SimulatedFSDataset implements FsDatasetSpi<FsVolumeSpi> {
   public FsVolumeSpi getVolume(ExtendedBlock b) {
     throw new UnsupportedOperationException();
   }
+
+  public String finalizeTouchedBlock(ExtendedBlock b, 
+    String localFileName) throws IOException {
+    return null;
+  }
 }
 
